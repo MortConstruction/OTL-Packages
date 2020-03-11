@@ -1,0 +1,1233 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/13/2017 1:54:42 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MSPDB05"
+  DTS:CreatorName="MORTENSON\econzemi"
+  DTS:DTSID="{10E3B1FD-D3CC-420B-B5AA-9E3E9B07F02F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.68"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="EventHubProjects"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{AAB623C4-0AD6-4E12-B29A-39396BCACAD1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[mspdb05.Mortenson_Hub]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{12E1DCD8-B50D-47AA-868E-1A8BEDDFD77D}"
+      DTS:ObjectName="mspdb05.Mortenson_Hub">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=mspdb05;Initial Catalog=Mortenson_Hub;Provider=SQLNCLI11;Integrated Security=SSPI;Application Name=SSIS-EventHubProjects-{12E1DCD8-B50D-47AA-868E-1A8BEDDFD77D}mspdb05.Mortenson_Hub;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[mspdb10.EventHub]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7C7B3F31-D8C5-4596-9655-3D574F31247C}"
+      DTS:ObjectName="mspdb10.EventHub">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=mspdb10;Initial Catalog=EventHub;Provider=SQLNCLI11;Integrated Security=SSPI;Application Name=SSIS-EventHubProjects-{7C7B3F31-D8C5-4596-9655-3D574F31247C}mspdb10.EventHub;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Check Source"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C1A18584-F035-4E2A-A678-CDD3B42A35CB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Check Source"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{12E1DCD8-B50D-47AA-868E-1A8BEDDFD77D}"
+          SQLTask:SqlStatementSource="select top 1  * from Mortenson_hub.dbo.r_projects " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get Projects"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{AE1235A0-C4C4-4D89-B685-831A1B026A11}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Projects"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Get Projects\Event Hub Target"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Event Hub Target"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Oracle_Projects]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Get Projects\Event Hub Target.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[mspdb10.EventHub]"
+                  connectionManagerRefId="Package.ConnectionManagers[mspdb10.EventHub]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[COMPANY_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="COMPANY_NAME"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[COMPANY_NAME]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[COMPANY_NAME]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[OFFICE_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="OFFICE_NAME"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[OFFICE_NAME]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[OFFICE_NAME]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Org_Name]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="Org_Name"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Org_Name]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Org_Name]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_Number]"
+                      cachedDataType="wstr"
+                      cachedLength="25"
+                      cachedName="Project_Number"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Number]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Number]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_ID]"
+                      cachedDataType="i8"
+                      cachedName="Project_ID"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_ID]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_ID]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_Name]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Project_Name"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Name]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Name]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[ProjectNo_Name]"
+                      cachedDataType="wstr"
+                      cachedLength="56"
+                      cachedName="ProjectNo_Name"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[ProjectNo_Name]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[ProjectNo_Name]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_Type]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Project_Type"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Type]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Type]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_Status_Code]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Project_Status_Code"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Status_Code]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Status_Code]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_Address_1]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Project_Address_1"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Address_1]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Address_1]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_Address_2]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Project_Address_2"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Address_2]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Address_2]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_Address_3]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Project_Address_3"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Address_3]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Address_3]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_City]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Project_City"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_City]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_City]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_State]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Project_State"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_State]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_State]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_Country]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Project_Country"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Country]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Country]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_Postal_Code]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="Project_Postal_Code"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Postal_Code]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Postal_Code]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[County]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="County"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[County]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[County]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Project_Record_Creation_Date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Project_Record_Creation_Date"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Record_Creation_Date]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Record_Creation_Date]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[Current_Project_Manager]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Current_Project_Manager"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Current_Project_Manager]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Current_Project_Manager]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[LongProjectName]"
+                      cachedDataType="wstr"
+                      cachedLength="300"
+                      cachedName="LongProjectName"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[LongProjectName]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[LongProjectName]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[ParentProjectID]"
+                      cachedDataType="numeric"
+                      cachedName="ParentProjectID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[ParentProjectID]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[ParentProjectID]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[CompanySegment]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="CompanySegment"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[CompanySegment]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[CompanySegment]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[GroupSegment]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="GroupSegment"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[GroupSegment]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[GroupSegment]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[FunctionSegment]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="FunctionSegment"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[FunctionSegment]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[FunctionSegment]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[GroupNoName]"
+                      cachedDataType="wstr"
+                      cachedLength="54"
+                      cachedName="GroupNoName"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[GroupNoName]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[GroupNoName]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].Columns[CurrentlyOpen]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="CurrentlyOpen"
+                      externalMetadataColumnId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[CurrentlyOpen]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[CurrentlyOpen]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[COMPANY_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="COMPANY_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[OFFICE_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="OFFICE_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Org_Name]"
+                      dataType="wstr"
+                      length="240"
+                      name="Org_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Number]"
+                      dataType="wstr"
+                      length="25"
+                      name="Project_Number" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_ID]"
+                      dataType="i4"
+                      name="Project_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Name]"
+                      dataType="wstr"
+                      length="30"
+                      name="Project_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[ProjectNo_Name]"
+                      dataType="wstr"
+                      length="150"
+                      name="ProjectNo_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Type]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Type" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Status_Code]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Status_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Address_1]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Address_1" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Address_2]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Address_2" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Address_3]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Address_3" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_City]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_City" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_State]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_State" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Country]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Country" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Postal_Code]"
+                      dataType="wstr"
+                      length="10"
+                      name="Project_Postal_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[County]"
+                      dataType="wstr"
+                      length="50"
+                      name="County" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Project_Record_Creation_Date]"
+                      dataType="dbTimeStamp"
+                      name="Project_Record_Creation_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Current_Project_Manager]"
+                      dataType="wstr"
+                      length="100"
+                      name="Current_Project_Manager" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[LongProjectName]"
+                      dataType="wstr"
+                      length="300"
+                      name="LongProjectName" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[ParentProjectID]"
+                      dataType="numeric"
+                      name="ParentProjectID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[CompanySegment]"
+                      dataType="wstr"
+                      length="3"
+                      name="CompanySegment" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[GroupSegment]"
+                      dataType="wstr"
+                      length="3"
+                      name="GroupSegment" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[FunctionSegment]"
+                      dataType="wstr"
+                      length="3"
+                      name="FunctionSegment" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[GroupNoName]"
+                      dataType="wstr"
+                      length="100"
+                      name="GroupNoName" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[CurrentlyOpen]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="CurrentlyOpen" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[Autokey]"
+                      dataType="i4"
+                      name="Autokey" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input].ExternalColumns[SQL_CreationDate]"
+                      dataType="dbTimeStamp"
+                      name="SQL_CreationDate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Get Projects\Event Hub Target.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Projects\Event Hub Target.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Get Projects\Event Hub Target.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Get Projects\Event Hub Target.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Get Projects\Event Hub Target.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Get Projects\Get Projects"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Get Projects"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT     COMPANY_NAME, OFFICE_NAME, Org_Name, Project_Number, Project_ID, Project_Name, ProjectNo_Name, Project_Type, Project_Status_Code, Project_Address_1, 
+                      Project_Address_2, Project_Address_3, Project_City, Project_State, Project_Country, Project_Postal_Code, County, Project_Record_Creation_Date, 
+                      Current_Project_Manager, LongProjectName, ParentProjectID, CompanySegment, GroupSegment, FunctionSegment, GroupNoName, CurrentlyOpen
+FROM         dbo.VW_R_Projects</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Get Projects\Get Projects.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[mspdb05.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[mspdb05.Mortenson_Hub]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[COMPANY_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[COMPANY_NAME]"
+                      length="240"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[COMPANY_NAME]"
+                      name="COMPANY_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[OFFICE_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[OFFICE_NAME]"
+                      length="240"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[OFFICE_NAME]"
+                      name="OFFICE_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Org_Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Org_Name]"
+                      length="240"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Org_Name]"
+                      name="Org_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Number]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Number]"
+                      length="25"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Number]"
+                      name="Project_Number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_ID]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_ID]"
+                      name="Project_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Name]"
+                      length="30"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Name]"
+                      name="Project_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[ProjectNo_Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[ProjectNo_Name]"
+                      length="56"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[ProjectNo_Name]"
+                      name="ProjectNo_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Type]"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Type]"
+                      name="Project_Type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Status_Code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Status_Code]"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Status_Code]"
+                      name="Project_Status_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Address_1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Address_1]"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Address_1]"
+                      name="Project_Address_1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Address_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Address_2]"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Address_2]"
+                      name="Project_Address_2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Address_3]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Address_3]"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Address_3]"
+                      name="Project_Address_3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_City]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_City]"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_City]"
+                      name="Project_City"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_State]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_State]"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_State]"
+                      name="Project_State"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Country]"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Country]"
+                      name="Project_Country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Postal_Code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Postal_Code]"
+                      length="10"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Postal_Code]"
+                      name="Project_Postal_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[County]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[County]"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[County]"
+                      name="County"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Record_Creation_Date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Record_Creation_Date]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Project_Record_Creation_Date]"
+                      name="Project_Record_Creation_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Current_Project_Manager]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Current_Project_Manager]"
+                      length="100"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[Current_Project_Manager]"
+                      name="Current_Project_Manager"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[LongProjectName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[LongProjectName]"
+                      length="300"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[LongProjectName]"
+                      name="LongProjectName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[ParentProjectID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[ParentProjectID]"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[ParentProjectID]"
+                      name="ParentProjectID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[CompanySegment]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[CompanySegment]"
+                      length="3"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[CompanySegment]"
+                      name="CompanySegment"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[GroupSegment]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[GroupSegment]"
+                      length="3"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[GroupSegment]"
+                      name="GroupSegment"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[FunctionSegment]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[FunctionSegment]"
+                      length="3"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[FunctionSegment]"
+                      name="FunctionSegment"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[GroupNoName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[GroupNoName]"
+                      length="54"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[GroupNoName]"
+                      name="GroupNoName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[CurrentlyOpen]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[CurrentlyOpen]"
+                      length="3"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].Columns[CurrentlyOpen]"
+                      name="CurrentlyOpen"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[COMPANY_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="COMPANY_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[OFFICE_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="OFFICE_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Org_Name]"
+                      dataType="wstr"
+                      length="240"
+                      name="Org_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Number]"
+                      dataType="wstr"
+                      length="25"
+                      name="Project_Number" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_ID]"
+                      dataType="i8"
+                      name="Project_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Name]"
+                      dataType="wstr"
+                      length="30"
+                      name="Project_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[ProjectNo_Name]"
+                      dataType="wstr"
+                      length="56"
+                      name="ProjectNo_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Type]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Type" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Status_Code]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Status_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Address_1]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Address_1" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Address_2]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Address_2" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Address_3]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Address_3" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_City]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_City" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_State]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_State" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Country]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Country" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Postal_Code]"
+                      dataType="wstr"
+                      length="10"
+                      name="Project_Postal_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[County]"
+                      dataType="wstr"
+                      length="50"
+                      name="County" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Project_Record_Creation_Date]"
+                      dataType="dbTimeStamp"
+                      name="Project_Record_Creation_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[Current_Project_Manager]"
+                      dataType="wstr"
+                      length="100"
+                      name="Current_Project_Manager" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[LongProjectName]"
+                      dataType="wstr"
+                      length="300"
+                      name="LongProjectName" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[ParentProjectID]"
+                      dataType="numeric"
+                      name="ParentProjectID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[CompanySegment]"
+                      dataType="wstr"
+                      length="3"
+                      name="CompanySegment" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[GroupSegment]"
+                      dataType="wstr"
+                      length="3"
+                      name="GroupSegment" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[FunctionSegment]"
+                      dataType="wstr"
+                      length="3"
+                      name="FunctionSegment" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[GroupNoName]"
+                      dataType="wstr"
+                      length="54"
+                      name="GroupNoName" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output].ExternalColumns[CurrentlyOpen]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="CurrentlyOpen" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[COMPANY_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[COMPANY_NAME]"
+                      name="COMPANY_NAME" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[OFFICE_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[OFFICE_NAME]"
+                      name="OFFICE_NAME" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Org_Name]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Org_Name]"
+                      name="Org_Name" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Number]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Number]"
+                      name="Project_Number" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_ID]"
+                      dataType="i8"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_ID]"
+                      name="Project_ID" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Name]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Name]"
+                      name="Project_Name" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[ProjectNo_Name]"
+                      dataType="wstr"
+                      length="56"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[ProjectNo_Name]"
+                      name="ProjectNo_Name" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Type]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Type]"
+                      name="Project_Type" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Status_Code]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Status_Code]"
+                      name="Project_Status_Code" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Address_1]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Address_1]"
+                      name="Project_Address_1" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Address_2]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Address_2]"
+                      name="Project_Address_2" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Address_3]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Address_3]"
+                      name="Project_Address_3" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_City]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_City]"
+                      name="Project_City" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_State]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_State]"
+                      name="Project_State" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Country]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Country]"
+                      name="Project_Country" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Postal_Code]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Postal_Code]"
+                      name="Project_Postal_Code" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[County]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[County]"
+                      name="County" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Record_Creation_Date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Project_Record_Creation_Date]"
+                      name="Project_Record_Creation_Date" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Current_Project_Manager]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[Current_Project_Manager]"
+                      name="Current_Project_Manager" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[LongProjectName]"
+                      dataType="wstr"
+                      length="300"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[LongProjectName]"
+                      name="LongProjectName" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[ParentProjectID]"
+                      dataType="numeric"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[ParentProjectID]"
+                      name="ParentProjectID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[CompanySegment]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[CompanySegment]"
+                      name="CompanySegment" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[GroupSegment]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[GroupSegment]"
+                      name="GroupSegment" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[FunctionSegment]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[FunctionSegment]"
+                      name="FunctionSegment" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[GroupNoName]"
+                      dataType="wstr"
+                      length="54"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[GroupNoName]"
+                      name="GroupNoName" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[CurrentlyOpen]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[CurrentlyOpen]"
+                      name="CurrentlyOpen" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Get Projects.Paths[OLE DB Source Output]"
+              endId="Package\Get Projects\Event Hub Target.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Get Projects\Get Projects.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AE243FB4-3A49-4707-AB41-57569A9F306C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7C7B3F31-D8C5-4596-9655-3D574F31247C}"
+          SQLTask:SqlStatementSource="truncate table EventHub.dbo.Oracle_Projects" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{BFDBA07C-A398-45E3-A2EB-8D8D34D3ED87}"
+      DTS:From="Package\Truncate Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Get Projects" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{0F69F7A1-64C0-49BD-A645-B076286570D4}"
+      DTS:From="Package\Check Source"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Truncate Table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:PackageVariables>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{AA97FC17-A5EF-4ABA-BDE5-DC97C9468D0E}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{BFDBA07C-A398-45E3-A2EB-8D8D34D3ED87}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{577399E9-A8D3-4AB9-A63C-8BDFC1731ED4}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{AE1235A0-C4C4-4D89-B685-831A1B026A11}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;TaskHost xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsDataFlowDiagram&gt;&lt;dwd:BoundingTop&gt;3254&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="9" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="0" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="49371" y="18838" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="0" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01000000900144420100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Source" left="14923" top="3254" logicalid="4" controlid="4" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Get Projects\Get Projects" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Destination" left="19897" top="6006" logicalid="5" controlid="5" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Get Projects\Event Hub Target" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="16323" top="4019" logicalid="6" controlid="6" masterid="0" hint1="0" hint2="0" width="5773" height="2487" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Get Projects.Paths[OLE DB Source Output]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="4" destid="5" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="16722" y="4418" /&gt;&lt;point x="16722" y="5212" /&gt;&lt;point x="21696" y="5212" /&gt;&lt;point x="21696" y="6006" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;/dwd:DtsDataFlowDiagram&gt;&lt;dwd:DtsComponentDesignerPropertiesList&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;94	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;1	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;94	TableInfoObjectType&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:string"&gt;Table&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;/dwd:DtsComponentDesignerPropertiesList&gt;&lt;/TaskHost&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{A0861A33-39EC-4774-BC08-AE6417294D48}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{AE1235A0-C4C4-4D89-B685-831A1B026A11}-111">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PipelinePath xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:SourceName&gt;OLE DB Source Output&lt;/dwd:SourceName&gt;&lt;dwd:DestinationName&gt;OLE DB Destination Input&lt;/dwd:DestinationName&gt;&lt;/PipelinePath&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{46E38482-C941-44B3-9708-8133D65DECB5}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{0F69F7A1-64C0-49BD-A645-B076286570D4}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{1BFFA6B6-ED73-4976-9F04-ABC08ECBF4EC}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="package-diagram">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsControlFlowDiagram&gt;&lt;dwd:BoundingTop&gt;952&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="8" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="0" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="49371" y="19764" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="13547" top="4630" logicalid="3" controlid="3" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Get Projects" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="11615" top="1958" logicalid="4" controlid="4" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Truncate Table" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="13015" top="2723" logicalid="5" controlid="5" masterid="0" hint1="0" hint2="0" width="2731" height="2407" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="4" destid="3" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="13414" y="3122" /&gt;&lt;point x="13414" y="3876" /&gt;&lt;point x="15346" y="3876" /&gt;&lt;point x="15346" y="4630" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="5582" top="952" logicalid="6" controlid="6" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Check Source" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="8781" top="1135" logicalid="7" controlid="7" masterid="0" hint1="0" hint2="0" width="3134" height="1805" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 1]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="6" destid="4" sourceattachpoint="15" destattachpoint="14" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="9180" y="1534" /&gt;&lt;point x="10397" y="1534" /&gt;&lt;point x="10397" y="2540" /&gt;&lt;point x="11615" y="2540" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;/dwd:DtsControlFlowDiagram&gt;&lt;/Package&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{E2A134F9-21FB-49EF-83F0-0C19A0812333}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="package-diagram">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsControlFlowDiagram&gt;&lt;dwd:BoundingTop&gt;952&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="8" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="0" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="49371" y="19764" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="13547" top="4630" logicalid="3" controlid="3" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Get Projects" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="11615" top="1958" logicalid="4" controlid="4" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Truncate Table" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="13015" top="2723" logicalid="5" controlid="5" masterid="0" hint1="0" hint2="0" width="2731" height="2407" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="4" destid="3" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="13414" y="3122" /&gt;&lt;point x="13414" y="3876" /&gt;&lt;point x="15346" y="3876" /&gt;&lt;point x="15346" y="4630" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="5582" top="952" logicalid="6" controlid="6" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Check Source" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="8781" top="1135" logicalid="7" controlid="7" masterid="0" hint1="0" hint2="0" width="3134" height="1805" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 1]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="6" destid="4" sourceattachpoint="15" destattachpoint="14" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="9180" y="1534" /&gt;&lt;point x="10397" y="1534" /&gt;&lt;point x="10397" y="2540" /&gt;&lt;point x="11615" y="2540" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;/dwd:DtsControlFlowDiagram&gt;&lt;/Package&gt;</DTS:Property>
+    </DTS:PackageVariable>
+  </DTS:PackageVariables>
+</DTS:Executable>

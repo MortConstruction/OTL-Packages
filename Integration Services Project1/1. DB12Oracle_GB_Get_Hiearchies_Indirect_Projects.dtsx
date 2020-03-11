@@ -1,0 +1,2893 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/18/2009 2:18:38 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MSPDB03"
+  DTS:CreatorName="MORTENSON\econzemi"
+  DTS:DTSID="{F795D1AE-F7D5-4B84-AD87-397208C500DC}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.68"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="1  DB12Oracle_GB_Get_Hiearchies_Indirect_Projects"
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{15541FF1-C8BF-433E-90A9-161C348F88D8}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[M12.Mortenson_Hub]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{812E2A7B-7E82-4B79-A3A7-EF04993573C5}"
+      DTS:ObjectName="M12.Mortenson_Hub">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=mspdb12;User ID=ORACLE_MORTHUB;Initial Catalog=Mortenson_Hub_MSPDB03;Provider=SQLOLEDB.1;Persist Security Info=True;Application Name=SSIS-Oracle_GB_Get_Hiearchies_Indirect_Projects-{812E2A7B-7E82-4B79-A3A7-EF04993573C5}SQL_Mortenson_Hub;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiODYtKKdq06zAcLIx4wA4AAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACJXNUnj44OJEbK6phFjBUAAAAAAASAAACgAAAAEAAAAC0FyTjg3mAHilgrFaRobgIwAAAAEOkbclEl4chg4o5LzTD9DU9IfjQUI2NP5fAD2jmWSez8HBkpIIOUpwj9BURd3ESAFAAAAFYIE84Ny+hApnpIbwzgXnixzcVw</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[pmamri.INT]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{803D2D73-1B1D-4F5E-8140-6397CEC5806C}"
+      DTS:ObjectName="pmamri.INT">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=pmamri;User ID=INT_INFORMATICA;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiODYtKKdq06zAcLIx4wA4AAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACA2s1kFYkyKwVFWd8VxkQlAAAAAASAAACgAAAAEAAAAEYsNG2eaXQ8CPRX0Cq4Rs0wAAAALsNWls5hlU0kZcYtcgMBd1Ls1Ub2PYynKQzHU981MaVsnzofCB90bFRY8kKH48EIFAAAAFN7JVO0coEe6QppEEYe0+P4DqNT</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SMTP Connection Manager]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{5D8F0BE3-5C7A-43B3-AD1D-02862E3083FE}"
+      DTS:ObjectName="SMTP Connection Manager">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=mspsmtp01;UseWindowsAuthentication=False;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Check Oracle"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6E81D921-ADC0-4CDA-B778-94FEE97129EF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Check Oracle"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server v9; © 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{803D2D73-1B1D-4F5E-8140-6397CEC5806C}"
+          SQLTask:SqlStatementSource="select count(*) from pa.pa_projects_all" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get Projects"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{32933AED-05C6-4D67-B1E1-8E11D6212D98}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Projects"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v9; (C) 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          engineThreads="5"
+          version="1">
+          <components>
+            <component
+              refId="Package\Get Projects\Mortenson Hub GB Projects"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation;Microsoft SqlServer v9; (C) 2005 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Mortenson Hub GB Projects"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[GB_Oracle_Indirects]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destinaton. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Get Projects\Mortenson Hub GB Projects.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[M12.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[M12.Mortenson_Hub]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      cachedDataType="numeric"
+                      cachedName="CARRYING_OUT_ORGANIZATION_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[CARRYING_OUT_ORGANIZATION_ID]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[SEGMENT1]"
+                      cachedDataType="wstr"
+                      cachedLength="25"
+                      cachedName="SEGMENT1"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT1]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[SEGMENT1]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="NAME"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[NAME]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[NAME]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[START_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="START_DATE"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[START_DATE]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[START_DATE]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[COMPLETION_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="COMPLETION_DATE"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[COMPLETION_DATE]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[COMPLETION_DATE]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[ORG_ID]"
+                      cachedDataType="numeric"
+                      cachedName="ORG_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[ORG_ID]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[ORG_ID]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[PROJECT_ID]"
+                      cachedDataType="numeric"
+                      cachedName="PROJECT_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[Project_ID]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[PROJECT_ID]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[PROJECT_STATUS_CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="PROJECT_STATUS_CODE"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[Project_Status_Code]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[PROJECT_STATUS_CODE]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[MAJORBUILDINGTYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="MAJORBUILDINGTYPE"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[MajorBuildingType]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[MAJORBUILDINGTYPE]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[MINORBUILDINGTYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="MINORBUILDINGTYPE"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[MinorBuildingType]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[MINORBUILDINGTYPE]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[CONTRACTTYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="CONTRACTTYPE"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[ContractType]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[CONTRACTTYPE]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[BIDTYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="BIDTYPE"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[BidType]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[BIDTYPE]" />
+                    <inputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].Columns[PROJECTTYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="PROJECTTYPE"
+                      externalMetadataColumnId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_TYPE]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[PROJECTTYPE]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[IndirectsKey]"
+                      dataType="numeric"
+                      name="IndirectsKey"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT1]"
+                      dataType="wstr"
+                      length="25"
+                      name="SEGMENT1" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[Project_ID]"
+                      dataType="i8"
+                      name="Project_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[NAME]"
+                      dataType="wstr"
+                      length="30"
+                      name="NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[START_DATE]"
+                      dataType="dbTimeStamp"
+                      name="START_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[COMPLETION_DATE]"
+                      dataType="dbTimeStamp"
+                      name="COMPLETION_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[ORG_ID]"
+                      dataType="numeric"
+                      name="ORG_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_TYPE]"
+                      dataType="wstr"
+                      length="50"
+                      name="PROJECT_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[OFFICE_ID]"
+                      dataType="numeric"
+                      name="OFFICE_ID"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[OFFICE_ID_HR]"
+                      dataType="numeric"
+                      name="OFFICE_ID_HR"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[Project_Status_Code]"
+                      dataType="wstr"
+                      length="50"
+                      name="Project_Status_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[MajorBuildingType]"
+                      dataType="wstr"
+                      length="75"
+                      name="MajorBuildingType" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[MinorBuildingType]"
+                      dataType="wstr"
+                      length="75"
+                      name="MinorBuildingType" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[ContractType]"
+                      dataType="wstr"
+                      length="50"
+                      name="ContractType" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input].ExternalColumns[BidType]"
+                      dataType="wstr"
+                      length="50"
+                      name="BidType" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Get Projects\Mortenson Hub GB Projects.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Get Projects\Mortenson Hub GB Projects.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Get Projects\Mortenson Hub GB Projects.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Get Projects\Mortenson Hub GB Projects.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Get Projects\Oracle Projects"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation;Microsoft SqlServer v9; (C) 2005 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Oracle Projects"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select pa.Carrying_Out_Organization_id,pa.Segment1,pa.Name,pa.start_date,
+ pa.completion_date,pa.org_id ,
+(case pa.project_type  when 'Department' then 'Indirect' else 'Direct' end)  ProjectType,
+pa.project_id,
+pa.project_status_code,
+cl.MajorBuildingType,
+cl.MinorBuildingType,
+cl.ContractType,
+cl.BidType
+from apps.pa_projects_all pa
+LEFT JOIN (
+SELECT   pa.Project_id,
+               MAX(CASE class_category
+                WHEN 'Major Building Type'
+                   THEN class_code
+                ELSE ''
+             END) AS MajorBuildingType,
+         MAX(CASE class_category
+                WHEN 'Minor Building Type'
+                   THEN class_code
+                ELSE ''
+             END) AS MinorBuildingType,
+         MAX(CASE class_category
+                WHEN 'Contract Type'
+                   THEN class_code
+                ELSE ''
+             END) AS ContractType,
+         MAX(CASE class_category
+                WHEN 'Bid Type'
+                   THEN class_code
+                ELSE ''
+             END) AS BidType
+FROM     apps.pa_projects_all pa  JOIN apps.PA_PROJECT_CLASSES_V pv  ON pa.project_id = pv.project_id
+WHERE    1 = 1
+AND      (   Class_Category IN('Major Building Type', 'Minor Building Type', 'Bid Type', 'Contract Type', Null)
+          OR Class_Category IS NULL)
+GROUP BY 
+         pa.project_id
+) CL 
+on PA.project_id = CL.project_id
+where 
+pa.project_type &lt;&gt; 'xxDepartment'
+and
+ pa.template_flag &lt;&gt; 'Y' 
+order by 1</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Get Projects\Oracle Projects.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[pmamri.INT]"
+                  connectionManagerRefId="Package.ConnectionManagers[pmamri.INT]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[SEGMENT1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT1]"
+                      length="25"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[SEGMENT1]"
+                      name="SEGMENT1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[NAME]"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[NAME]"
+                      name="NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[START_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[START_DATE]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[START_DATE]"
+                      name="START_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[COMPLETION_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[COMPLETION_DATE]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[COMPLETION_DATE]"
+                      name="COMPLETION_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[ORG_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[ORG_ID]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[ORG_ID]"
+                      name="ORG_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[PROJECTTYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[PROJECTTYPE]"
+                      length="8"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[PROJECTTYPE]"
+                      name="PROJECTTYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[PROJECT_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ID]"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[PROJECT_ID]"
+                      name="PROJECT_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[PROJECT_STATUS_CODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_STATUS_CODE]"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[PROJECT_STATUS_CODE]"
+                      name="PROJECT_STATUS_CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[MAJORBUILDINGTYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[MAJORBUILDINGTYPE]"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[MAJORBUILDINGTYPE]"
+                      name="MAJORBUILDINGTYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[MINORBUILDINGTYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[MINORBUILDINGTYPE]"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[MINORBUILDINGTYPE]"
+                      name="MINORBUILDINGTYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[CONTRACTTYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[CONTRACTTYPE]"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[CONTRACTTYPE]"
+                      name="CONTRACTTYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[BIDTYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[BIDTYPE]"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].Columns[BIDTYPE]"
+                      name="BIDTYPE"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT1]"
+                      dataType="wstr"
+                      length="25"
+                      name="SEGMENT1" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[NAME]"
+                      dataType="wstr"
+                      length="30"
+                      name="NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[START_DATE]"
+                      dataType="dbTimeStamp"
+                      name="START_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[COMPLETION_DATE]"
+                      dataType="dbTimeStamp"
+                      name="COMPLETION_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[ORG_ID]"
+                      dataType="numeric"
+                      name="ORG_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[PROJECTTYPE]"
+                      dataType="wstr"
+                      length="8"
+                      name="PROJECTTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ID]"
+                      dataType="numeric"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_STATUS_CODE]"
+                      dataType="wstr"
+                      length="30"
+                      name="PROJECT_STATUS_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[MAJORBUILDINGTYPE]"
+                      dataType="wstr"
+                      length="30"
+                      name="MAJORBUILDINGTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[MINORBUILDINGTYPE]"
+                      dataType="wstr"
+                      length="30"
+                      name="MINORBUILDINGTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[CONTRACTTYPE]"
+                      dataType="wstr"
+                      length="30"
+                      name="CONTRACTTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output].ExternalColumns[BIDTYPE]"
+                      dataType="wstr"
+                      length="30"
+                      name="BIDTYPE" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[SEGMENT1]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[SEGMENT1]"
+                      name="SEGMENT1" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[NAME]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[NAME]"
+                      name="NAME" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[START_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[START_DATE]"
+                      name="START_DATE" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[COMPLETION_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[COMPLETION_DATE]"
+                      name="COMPLETION_DATE" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[ORG_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[ORG_ID]"
+                      name="ORG_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[PROJECTTYPE]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[PROJECTTYPE]"
+                      name="PROJECTTYPE" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[PROJECT_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[PROJECT_ID]"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[PROJECT_STATUS_CODE]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[PROJECT_STATUS_CODE]"
+                      name="PROJECT_STATUS_CODE" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[MAJORBUILDINGTYPE]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[MAJORBUILDINGTYPE]"
+                      name="MAJORBUILDINGTYPE" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[MINORBUILDINGTYPE]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[MINORBUILDINGTYPE]"
+                      name="MINORBUILDINGTYPE" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[CONTRACTTYPE]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[CONTRACTTYPE]"
+                      name="CONTRACTTYPE" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[BIDTYPE]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[BIDTYPE]"
+                      name="BIDTYPE" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Get Projects.Paths[OLE DB Source Output]"
+              endId="Package\Get Projects\Mortenson Hub GB Projects.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Get Projects\Oracle Projects.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\GL Segments"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{04B02C67-E4C8-451A-A194-1DF5A78E87B4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="GL Segments"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v9; (C) 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          engineThreads="5"
+          version="1">
+          <components>
+            <component
+              refId="Package\GL Segments\Flex Values"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation;Microsoft SqlServer v9; (C) 2005 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Flex Values"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select flex_value_meaning,description,1 as GL_Segment_Number,'Company' as GL_Segment_Description from apps.FND_FLEX_VALUES_tl where FLEX_VALUE_ID in
+  (SELECT Flex_value_id FROM apps.FND_FLEX_VALUES WHERE FLEX_VALUE_SET_ID IN 
+  (SELECT FLEX_VALUE_SET_ID FROM apps.FND_FLEX_VALUE_SETS WHERE FLEX_VALUE_SET_NAME LIKE 'MORT_GL_COMPANY%'))
+ union
+  select flex_value_meaning,description,2 as GL_Segment_Number,'Group' as GL_Segment_Description 
+  from apps.FND_FLEX_VALUES_tl where FLEX_VALUE_ID in
+  (SELECT Flex_value_id FROM apps.FND_FLEX_VALUES WHERE FLEX_VALUE_SET_ID IN 
+  (SELECT FLEX_VALUE_SET_ID FROM apps.FND_FLEX_VALUE_SETS WHERE FLEX_VALUE_SET_NAME LIKE 'MORT_GL_GROUP%'and summary_flag = 'N'and Compiled_value_attributes like 'Y%'))
+ union
+  select flex_value_meaning,description ,3 as GL_Segment_Number,'Function' as GL_Segment_Description  
+  from apps.FND_FLEX_VALUES_tl where FLEX_VALUE_ID in
+  (SELECT Flex_value_id FROM apps.FND_FLEX_VALUES WHERE FLEX_VALUE_SET_ID IN 
+  (SELECT FLEX_VALUE_SET_ID FROM apps.FND_FLEX_VALUE_SETS WHERE FLEX_VALUE_SET_NAME LIKE 'MORT_GL_FUNCTION%'and summary_flag = 'N'and Compiled_value_attributes like 'Y%'))
+  union
+  select flex_value_meaning,description ,4 as GL_Segment_Number,'Account' as GL_Segment_Description
+  from apps.FND_FLEX_VALUES_tl t where FLEX_VALUE_ID in
+  (SELECT Flex_value_id FROM apps.FND_FLEX_VALUES WHERE FLEX_VALUE_SET_ID IN 
+  (SELECT FLEX_VALUE_SET_ID FROM apps.FND_FLEX_VALUE_SETS WHERE FLEX_VALUE_SET_NAME LIKE 'MORT_GL_ACCOUNT%'and summary_flag = 'N'and Compiled_value_attributes like 'Y%'))
+  order by 3,1</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\GL Segments\Flex Values.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[pmamri.INT]"
+                  connectionManagerRefId="Package.ConnectionManagers[pmamri.INT]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[FLEX_VALUE_MEANING]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].ExternalColumns[FLEX_VALUE_MEANING]"
+                      length="150"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[FLEX_VALUE_MEANING]"
+                      name="FLEX_VALUE_MEANING"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[DESCRIPTION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].ExternalColumns[DESCRIPTION]"
+                      length="240"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[DESCRIPTION]"
+                      name="DESCRIPTION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[GL_SEGMENT_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].ExternalColumns[GL_SEGMENT_NUMBER]"
+                      length="38"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[GL_SEGMENT_NUMBER]"
+                      name="GL_SEGMENT_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[GL_SEGMENT_DESCRIPTION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].ExternalColumns[GL_SEGMENT_DESCRIPTION]"
+                      length="8"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[GL_SEGMENT_DESCRIPTION]"
+                      name="GL_SEGMENT_DESCRIPTION"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].ExternalColumns[FLEX_VALUE_MEANING]"
+                      dataType="wstr"
+                      length="150"
+                      name="FLEX_VALUE_MEANING" />
+                    <externalMetadataColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].ExternalColumns[DESCRIPTION]"
+                      dataType="wstr"
+                      length="240"
+                      name="DESCRIPTION" />
+                    <externalMetadataColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].ExternalColumns[GL_SEGMENT_NUMBER]"
+                      dataType="wstr"
+                      length="38"
+                      name="GL_SEGMENT_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].ExternalColumns[GL_SEGMENT_DESCRIPTION]"
+                      dataType="wstr"
+                      length="8"
+                      name="GL_SEGMENT_DESCRIPTION" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[FLEX_VALUE_MEANING]"
+                      dataType="wstr"
+                      length="150"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[FLEX_VALUE_MEANING]"
+                      name="FLEX_VALUE_MEANING" />
+                    <outputColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[DESCRIPTION]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[DESCRIPTION]"
+                      name="DESCRIPTION" />
+                    <outputColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[GL_SEGMENT_NUMBER]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[GL_SEGMENT_NUMBER]"
+                      name="GL_SEGMENT_NUMBER" />
+                    <outputColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[GL_SEGMENT_DESCRIPTION]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[GL_SEGMENT_DESCRIPTION]"
+                      name="GL_SEGMENT_DESCRIPTION" />
+                    <outputColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\GL Segments\GL Segments"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation;Microsoft SqlServer v9; (C) 2005 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="GL Segments"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[GB_Oracle_GL_Segments]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destinaton. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\GL Segments\GL Segments.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[M12.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[M12.Mortenson_Hub]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].Columns[FLEX_VALUE_MEANING]"
+                      cachedDataType="wstr"
+                      cachedLength="150"
+                      cachedName="FLEX_VALUE_MEANING"
+                      externalMetadataColumnId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].ExternalColumns[FLEX_VALUE_MEANING]"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[FLEX_VALUE_MEANING]" />
+                    <inputColumn
+                      refId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].Columns[DESCRIPTION]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="DESCRIPTION"
+                      externalMetadataColumnId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].ExternalColumns[DESCRIPTION]"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[DESCRIPTION]" />
+                    <inputColumn
+                      refId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].Columns[GL_SEGMENT_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="GL_SEGMENT_NUMBER"
+                      externalMetadataColumnId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].ExternalColumns[GL_SEGMENT_NUMBER]"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[GL_SEGMENT_NUMBER]" />
+                    <inputColumn
+                      refId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].Columns[GL_SEGMENT_DESCRIPTION]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="GL_SEGMENT_DESCRIPTION"
+                      externalMetadataColumnId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].ExternalColumns[GL_SEGMENT_DESCRIPTION]"
+                      lineageId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output].Columns[GL_SEGMENT_DESCRIPTION]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].ExternalColumns[SegmentsKey]"
+                      dataType="numeric"
+                      name="SegmentsKey"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].ExternalColumns[FLEX_VALUE_MEANING]"
+                      dataType="wstr"
+                      length="150"
+                      name="FLEX_VALUE_MEANING" />
+                    <externalMetadataColumn
+                      refId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].ExternalColumns[DESCRIPTION]"
+                      dataType="wstr"
+                      length="240"
+                      name="DESCRIPTION" />
+                    <externalMetadataColumn
+                      refId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].ExternalColumns[GL_SEGMENT_NUMBER]"
+                      dataType="numeric"
+                      name="GL_SEGMENT_NUMBER"
+                      precision="28" />
+                    <externalMetadataColumn
+                      refId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input].ExternalColumns[GL_SEGMENT_DESCRIPTION]"
+                      dataType="wstr"
+                      length="8"
+                      name="GL_SEGMENT_DESCRIPTION" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\GL Segments\GL Segments.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\GL Segments\GL Segments.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\GL Segments\GL Segments.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\GL Segments\GL Segments.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\GL Segments\GL Segments.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\GL Segments.Paths[OLE DB Source Output]"
+              endId="Package\GL Segments\GL Segments.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\GL Segments\Flex Values.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Hierarchies"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{5AA6035F-8E40-4094-9015-E5CD188FC514}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Hierarchies"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v9; (C) 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          engineThreads="5"
+          version="1">
+          <components>
+            <component
+              refId="Package\Hierarchies\Mortenson_Hub Hierarchies"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation;Microsoft SqlServer v9; (C) 2005 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Mortenson_Hub Hierarchies"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[GB_Oracle_Hierarchy]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destinaton. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[M12.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[M12.Mortenson_Hub]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].Columns[PARENT_ORG]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="PARENT_ORG"
+                      externalMetadataColumnId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[PARENT_ORG]"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[PARENT_ORG]" />
+                    <inputColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].Columns[PARENT_ORG_ID]"
+                      cachedDataType="numeric"
+                      cachedName="PARENT_ORG_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[PARENT_ORG_ID]"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[PARENT_ORG_ID]" />
+                    <inputColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].Columns[CHILD_ORG]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="CHILD_ORG"
+                      externalMetadataColumnId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[CHILD_ORG]"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[CHILD_ORG]" />
+                    <inputColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].Columns[CHILD_ORG_ID]"
+                      cachedDataType="numeric"
+                      cachedName="CHILD_ORG_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[CHILD_ORG_ID]"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[CHILD_ORG_ID]" />
+                    <inputColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].Columns[ORGANIZATION_LEVEL]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="ORGANIZATION_LEVEL"
+                      externalMetadataColumnId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_LEVEL]"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[ORGANIZATION_LEVEL]" />
+                    <inputColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].Columns[HIEARCHY]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="HIEARCHY"
+                      externalMetadataColumnId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[HIEARCHY]"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[HIEARCHY]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[HierarchyKey]"
+                      dataType="numeric"
+                      name="HierarchyKey"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[PARENT_ORG]"
+                      dataType="wstr"
+                      length="240"
+                      name="PARENT_ORG" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[PARENT_ORG_ID]"
+                      dataType="numeric"
+                      name="PARENT_ORG_ID"
+                      precision="28" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[CHILD_ORG]"
+                      dataType="wstr"
+                      length="240"
+                      name="CHILD_ORG" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[CHILD_ORG_ID]"
+                      dataType="numeric"
+                      name="CHILD_ORG_ID"
+                      precision="28" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_LEVEL]"
+                      dataType="numeric"
+                      name="ORGANIZATION_LEVEL"
+                      precision="28" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[HIEARCHY]"
+                      dataType="wstr"
+                      length="8"
+                      name="HIEARCHY" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input].ExternalColumns[Office_Segement2_value]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Office_Segement2_value" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Hierarchies\Mortenson_Hub Hierarchies.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Mortenson_Hub Hierarchies.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Hierarchies\Mortenson_Hub Hierarchies.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Hierarchies\Oracle Hiearchies"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation;Microsoft SqlServer v9; (C) 2005 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Oracle Hiearchies"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select distinct 
+        hou_par.name  PARENT_ORG
+       ,xx.parent_organization_id PARENT_ORG_ID
+       ,hou_child.name CHILD_ORG
+	,xx.child_organization_id CHILD_ORG_ID
+	 ,xx.organization_level, 'Projects'  as Hiearchy
+  from  apps.XXPAX_ORG_HIERARCHY_V xx
+       ,hr_organization_units hou_par
+	 ,hr_organization_units hou_child
+  where hou_par.organization_id = xx.parent_organization_id
+    and hou_child.organization_id = xx.child_organization_id
+
+union
+
+select distinct 
+        hou_par.name  PARENT_ORG
+       ,xx.parent_organization_id PARENT_ORG_ID
+       ,hou_child.name CHILD_ORG
+	,xx.child_organization_id CHILD_ORG_ID
+	 ,xx.organization_level, 'HR'  as Hiearchy
+  from  apps.XXHRX_ORG_HIERARCHY_V xx
+       ,hr_organization_units hou_par
+	 ,hr_organization_units hou_child
+  where hou_par.organization_id = xx.parent_organization_id
+    and hou_child.organization_id = xx.child_organization_id</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Hierarchies\Oracle Hiearchies.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[pmamri.INT]"
+                  connectionManagerRefId="Package.ConnectionManagers[pmamri.INT]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[PARENT_ORG]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[PARENT_ORG]"
+                      length="240"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[PARENT_ORG]"
+                      name="PARENT_ORG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[PARENT_ORG_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[PARENT_ORG_ID]"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[PARENT_ORG_ID]"
+                      name="PARENT_ORG_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[CHILD_ORG]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[CHILD_ORG]"
+                      length="240"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[CHILD_ORG]"
+                      name="CHILD_ORG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[CHILD_ORG_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[CHILD_ORG_ID]"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[CHILD_ORG_ID]"
+                      name="CHILD_ORG_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[ORGANIZATION_LEVEL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[ORGANIZATION_LEVEL]"
+                      length="38"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[ORGANIZATION_LEVEL]"
+                      name="ORGANIZATION_LEVEL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[HIEARCHY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[HIEARCHY]"
+                      length="8"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].Columns[HIEARCHY]"
+                      name="HIEARCHY"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[PARENT_ORG]"
+                      dataType="wstr"
+                      length="240"
+                      name="PARENT_ORG" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[PARENT_ORG_ID]"
+                      dataType="numeric"
+                      name="PARENT_ORG_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[CHILD_ORG]"
+                      dataType="wstr"
+                      length="240"
+                      name="CHILD_ORG" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[CHILD_ORG_ID]"
+                      dataType="numeric"
+                      name="CHILD_ORG_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[ORGANIZATION_LEVEL]"
+                      dataType="wstr"
+                      length="38"
+                      name="ORGANIZATION_LEVEL" />
+                    <externalMetadataColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output].ExternalColumns[HIEARCHY]"
+                      dataType="wstr"
+                      length="8"
+                      name="HIEARCHY" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[PARENT_ORG]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[PARENT_ORG]"
+                      name="PARENT_ORG" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[PARENT_ORG_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[PARENT_ORG_ID]"
+                      name="PARENT_ORG_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[CHILD_ORG]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[CHILD_ORG]"
+                      name="CHILD_ORG" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[CHILD_ORG_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[CHILD_ORG_ID]"
+                      name="CHILD_ORG_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[ORGANIZATION_LEVEL]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[ORGANIZATION_LEVEL]"
+                      name="ORGANIZATION_LEVEL" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[HIEARCHY]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[HIEARCHY]"
+                      name="HIEARCHY" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Hierarchies.Paths[OLE DB Source Output]"
+              endId="Package\Hierarchies\Mortenson_Hub Hierarchies.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Hierarchies\Oracle Hiearchies.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Org and its Seg2 value"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{F485FDF9-6191-4A64-B694-1E6E629F1ECA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Org and its Seg2 value"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v9; (C) 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          engineThreads="5"
+          version="1">
+          <components>
+            <component
+              refId="Package\Org and its Seg2 value\Org and its Seg2"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation;Microsoft SqlServer v9; (C) 2005 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Org and its Seg2"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select HOU2.ORGANIZATION_ID,HOU2.NAME ORG_NAME,SEG1.SEGMENT1,SEG2.SEGMENT2,SEG3.SEGMENT3 from hr_organization_units hou2,
+(SELECT   hou.organization_id,
+         hou.name,
+         psvl.segment_value Segment1
+    FROM apps.pa_segment_value_lookups psvl,
+         apps.pa_segment_value_lookup_sets psvls,
+         apps.hr_organization_units hou
+   WHERE psvl.segment_value_lookup_set_id = psvls.segment_value_lookup_set_id
+     AND psvl.segment_value_lookup = hou.name
+     AND psvls.segment_value_lookup_set_name = 'Comp From Project Org') SEG1
+,	(SELECT   hou.organization_id,
+         hou.name,
+         psvl.segment_value Segment2
+    FROM apps.pa_segment_value_lookups psvl,
+         apps.pa_segment_value_lookup_sets psvls,
+         apps.hr_organization_units hou
+   WHERE psvl.segment_value_lookup_set_id = psvls.segment_value_lookup_set_id
+     AND psvl.segment_value_lookup = hou.name
+     AND psvls.segment_value_lookup_set_name = 'Group From Project Org') SEG2
+,(SELECT   hou.organization_id,
+         hou.name,
+         psvl.segment_value Segment3
+    FROM apps.pa_segment_value_lookups psvl,
+         apps.pa_segment_value_lookup_sets psvls,
+         apps.hr_organization_units hou
+   WHERE psvl.segment_value_lookup_set_id = psvls.segment_value_lookup_set_id
+     AND psvl.segment_value_lookup = hou.name
+     AND psvls.segment_value_lookup_set_name = 'Function From Project Org') SEG3
+ where 
+	 hou2.organization_id = SEG1.ORGANIZATION_ID(+)
+AND	 hou2.organization_id = SEG2.ORGANIZATION_ID(+)
+AND	 hou2.organization_id = SEG3.ORGANIZATION_ID(+)
+AND  hou2.internal_external_flag = 'INT'	
+and hou2.location_id is not null</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Org and its Seg2 value\Org and its Seg2.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[pmamri.INT]"
+                  connectionManagerRefId="Package.ConnectionManagers[pmamri.INT]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].ExternalColumns[ORGANIZATION_ID]"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]"
+                      name="ORGANIZATION_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[ORG_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].ExternalColumns[ORG_NAME]"
+                      length="240"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[ORG_NAME]"
+                      name="ORG_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[SEGMENT1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT1]"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[SEGMENT1]"
+                      name="SEGMENT1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[SEGMENT2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT2]"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[SEGMENT2]"
+                      name="SEGMENT2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[SEGMENT3]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT3]"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[SEGMENT3]"
+                      name="SEGMENT3"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].ExternalColumns[ORGANIZATION_ID]"
+                      dataType="numeric"
+                      name="ORGANIZATION_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].ExternalColumns[ORG_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="ORG_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT1]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT1" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT2]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT2" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT3]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT3" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[ORGANIZATION_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[ORGANIZATION_ID]"
+                      name="ORGANIZATION_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[ORG_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[ORG_NAME]"
+                      name="ORG_NAME" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[SEGMENT1]"
+                      dataType="wstr"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[SEGMENT1]"
+                      name="SEGMENT1" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[SEGMENT2]"
+                      dataType="wstr"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[SEGMENT2]"
+                      name="SEGMENT2" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[SEGMENT3]"
+                      dataType="wstr"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[SEGMENT3]"
+                      name="SEGMENT3" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Org and its Seg2 value\Seg2 Mapping"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation;Microsoft SqlServer v9; (C) 2005 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Seg2 Mapping"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[GB_Oracle_Orgs_FlexValues]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destinaton. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Org and its Seg2 value\Seg2 Mapping.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[M12.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[M12.Mortenson_Hub]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].Columns[ORGANIZATION_ID]"
+                      cachedDataType="numeric"
+                      cachedName="ORGANIZATION_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_ID]"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]" />
+                    <inputColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].Columns[ORG_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="ORG_NAME"
+                      externalMetadataColumnId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[ORG_NAME]"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[ORG_NAME]" />
+                    <inputColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].Columns[SEGMENT1]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="SEGMENT1"
+                      externalMetadataColumnId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT1_VALUE]"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[SEGMENT1]" />
+                    <inputColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].Columns[SEGMENT2]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="SEGMENT2"
+                      externalMetadataColumnId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT2_VALUE]"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[SEGMENT2]" />
+                    <inputColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].Columns[SEGMENT3]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="SEGMENT3"
+                      externalMetadataColumnId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT3_VALUE]"
+                      lineageId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output].Columns[SEGMENT3]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_ID]"
+                      dataType="i4"
+                      name="ORGANIZATION_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[ORG_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="ORG_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT1_VALUE]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT1_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT2_VALUE]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT2_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT3_VALUE]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT3_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[OrganizationParentID]"
+                      dataType="i4"
+                      name="OrganizationParentID" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input].ExternalColumns[OrganizationParentID_HR]"
+                      dataType="i4"
+                      name="OrganizationParentID_HR" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Org and its Seg2 value\Seg2 Mapping.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Org and its Seg2 value\Seg2 Mapping.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value\Seg2 Mapping.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Org and its Seg2 value\Seg2 Mapping.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Org and its Seg2 value.Paths[OLE DB Source Output]"
+              endId="Package\Org and its Seg2 value\Seg2 Mapping.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Org and its Seg2 value\Org and its Seg2.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Org and its Seg2 value 2012"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{325CAEA2-8064-40AB-8102-6DC3CEB286CA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Org and its Seg2 value 2012"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Org and its Seg2 value 2012\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[GB_Oracle_Orgs_FlexValues]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[M12.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[M12.Mortenson_Hub]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CHILD_ORGANIZATION_ID]"
+                      cachedDataType="numeric"
+                      cachedName="CHILD_ORGANIZATION_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_ID]"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[CHILD_ORGANIZATION_ID]" />
+                    <inputColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ORGNAME]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="ORGNAME"
+                      externalMetadataColumnId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_NAME]"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[ORGNAME]" />
+                    <inputColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[COMPANYTOSEGMENT]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="COMPANYTOSEGMENT"
+                      externalMetadataColumnId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT1_VALUE]"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[COMPANYTOSEGMENT]" />
+                    <inputColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GROUPTOSEGMENT]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="GROUPTOSEGMENT"
+                      externalMetadataColumnId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT2_VALUE]"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[GROUPTOSEGMENT]" />
+                    <inputColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FUNCTIONTOSEGMENT]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="FUNCTIONTOSEGMENT"
+                      externalMetadataColumnId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT3_VALUE]"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[FUNCTIONTOSEGMENT]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_ID]"
+                      dataType="i4"
+                      name="ORGANIZATION_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="ORG_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT1_VALUE]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT1_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT2_VALUE]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT2_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT3_VALUE]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT3_VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrganizationParentID]"
+                      dataType="i4"
+                      name="OrganizationParentID" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrganizationParentID_HR]"
+                      dataType="i4"
+                      name="OrganizationParentID_HR" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Org and its Seg2 value 2012\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Org and its Seg2 value 2012\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Org and its Seg2 value 2012\Oracle Orgs"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Oracle Orgs"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select xp.child_organization_id, n.name as OrgName,seg1.CompanyToSegment,
+seg2.GroupToSegment,seg3.FunctionToSegment
+from apps.XXPAX_ORG_HIERARCHY_V XP
+
+left JOIN apps.hr_organization_units  N
+on n.organization_id = xp.child_organization_id
+/*---SEGMENT1*/
+LEFT JOIN (/*Org_ID To Company Segment*/
+ select 'Segment1' as GLSegment, psvls.segment_VAlue_lookup_set_name,psvls.last_update_date
+ ,psvl.Segment_Value_lookup as ORG_IDFromSegment, segment_Value as CompanyToSegment
+ from  apps.pa_segment_value_lookups psvl
+      ,apps.pa_segment_value_lookup_sets psvls
+ WHERE psvl.segment_value_lookup_set_id = psvls.segment_value_lookup_set_id
+ and substr(psvl.segment_value_lookup,0,1) in ('0','1','2','3','4','5','6','7','8','9')
+  AND psvls.segment_value_lookup_set_name = 'Company From Project Org ID') SEG1
+on xp.Company_Org_id = to_number(seg1.Org_idfromsegment)     
+   
+/*--SEGMENT 2*/
+LEFT JOIN 
+/*Carrying Out Org_ID To Group Segment*/
+( select 'Segment2' as GLSegment,psvls.segment_VAlue_lookup_set_name,psvls.last_update_date
+ ,psvl.Segment_Value_lookup as ORG_IDFromSegment, segment_Value as GroupToSegment
+ from  apps.pa_segment_value_lookups psvl
+      ,apps.pa_segment_value_lookup_sets psvls
+ WHERE psvl.segment_value_lookup_set_id = psvls.segment_value_lookup_set_id
+ and substr(psvl.segment_value_lookup,0,1) in ('0','1','2','3','4','5','6','7','8','9')
+  AND psvls.segment_value_lookup_set_name = 'Group From Carry Out Org ID') Seg2
+on xp.child_organization_id = to_number(seg2.Org_idfromsegment)  
+/*SEGMENT 3*/
+LEFT JOIN 
+/*Carrying Out Org_ID To Function Segment*/
+ (select 'Segment3' as GLSegment,psvls.segment_VAlue_lookup_set_name,psvls.last_update_date
+ ,psvl.Segment_Value_lookup as ORG_IDFromSegment, segment_Value as FunctionToSegment
+ from  apps.pa_segment_value_lookups psvl
+      ,apps.pa_segment_value_lookup_sets psvls
+ WHERE psvl.segment_value_lookup_set_id = psvls.segment_value_lookup_set_id
+ and substr(psvl.segment_value_lookup,0,1) in ('0','1','2','3','4','5','6','7','8','9')
+  AND psvls.segment_value_lookup_set_name = 'Function From Carry Out Org ID') Seg3
+on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[pmamri.INT]"
+                  connectionManagerRefId="Package.ConnectionManagers[pmamri.INT]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[CHILD_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].ExternalColumns[CHILD_ORGANIZATION_ID]"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[CHILD_ORGANIZATION_ID]"
+                      name="CHILD_ORGANIZATION_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[ORGNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].ExternalColumns[ORGNAME]"
+                      length="240"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[ORGNAME]"
+                      name="ORGNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[COMPANYTOSEGMENT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].ExternalColumns[COMPANYTOSEGMENT]"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[COMPANYTOSEGMENT]"
+                      name="COMPANYTOSEGMENT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[GROUPTOSEGMENT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].ExternalColumns[GROUPTOSEGMENT]"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[GROUPTOSEGMENT]"
+                      name="GROUPTOSEGMENT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[FUNCTIONTOSEGMENT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].ExternalColumns[FUNCTIONTOSEGMENT]"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].Columns[FUNCTIONTOSEGMENT]"
+                      name="FUNCTIONTOSEGMENT"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].ExternalColumns[CHILD_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      name="CHILD_ORGANIZATION_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].ExternalColumns[ORGNAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="ORGNAME" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].ExternalColumns[COMPANYTOSEGMENT]"
+                      dataType="wstr"
+                      length="70"
+                      name="COMPANYTOSEGMENT" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].ExternalColumns[GROUPTOSEGMENT]"
+                      dataType="wstr"
+                      length="70"
+                      name="GROUPTOSEGMENT" />
+                    <externalMetadataColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output].ExternalColumns[FUNCTIONTOSEGMENT]"
+                      dataType="wstr"
+                      length="70"
+                      name="FUNCTIONTOSEGMENT" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[CHILD_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[CHILD_ORGANIZATION_ID]"
+                      name="CHILD_ORGANIZATION_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[ORGNAME]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[ORGNAME]"
+                      name="ORGNAME" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[COMPANYTOSEGMENT]"
+                      dataType="wstr"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[COMPANYTOSEGMENT]"
+                      name="COMPANYTOSEGMENT" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[GROUPTOSEGMENT]"
+                      dataType="wstr"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[GROUPTOSEGMENT]"
+                      name="GROUPTOSEGMENT" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[FUNCTIONTOSEGMENT]"
+                      dataType="wstr"
+                      length="70"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[FUNCTIONTOSEGMENT]"
+                      name="FUNCTIONTOSEGMENT" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Org and its Seg2 value 2012.Paths[OLE DB Source Output]"
+              endId="Package\Org and its Seg2 value 2012\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Org and its Seg2 value 2012\Oracle Orgs.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Remove apostrophes"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Remove apostrophes"
+      DTS:DTSID="{0206A05D-5766-4CB8-9F66-DDD7732A63F8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Remove apostrophes"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server v9; © 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{812E2A7B-7E82-4B79-A3A7-EF04993573C5}"
+          SQLTask:SqlStatementSource="update GB_Oracle_Indirects&#xA;set name = REPLACE([name],'''','')&#xA;where [name] like '%''%'&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Send Mail Task"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{634AD4F4-EABD-4271-873F-95FCCB4FA4FF}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Send Mail Task"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; Microsoft SQL Server v9; © 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{5D8F0BE3-5C7A-43B3-AD1D-02862E3083FE}"
+          SendMailTask:From="eric.conzemius@mortenson.com"
+          SendMailTask:To="eric.conzemius@mortenson.com"
+          SendMailTask:Subject="GB_Tables Failed" xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Truncate Hierarchy Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="SQL Truncate Hierarchy Table"
+      DTS:DTSID="{9949C110-EEF4-4FAB-AA49-6B1510D588B4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Truncate Hierarchy Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server v9; © 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{812E2A7B-7E82-4B79-A3A7-EF04993573C5}"
+          SQLTask:SqlStatementSource="truncate table GB_Oracle_Hierarchy&#xA;&#xA;truncate table GB_Oracle_Indirects&#xA;&#xA;truncate table GB_Oracle_GL_Segments&#xA;&#xA;truncate table GB_Oracle_Orgs_FlexValues" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Parent Org"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Update Parent Org"
+      DTS:DTSID="{0FAAD645-599E-4E1C-8F50-C4B71DB259F1}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Parent Org"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server v9; © 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{812E2A7B-7E82-4B79-A3A7-EF04993573C5}"
+          SQLTask:SqlStatementSource="update  dbo.GB_Oracle_Orgs_FlexValues&#xA;set OrganizationParentID_HR= dbo.GB_Oracle_Hierarchy.PARENT_ORG_ID&#xA;from&#xA;        dbo.GB_Oracle_Orgs_FlexValues INNER JOIN&#xA;        dbo.GB_Oracle_Hierarchy ON&#xA;        dbo.GB_Oracle_Orgs_FlexValues.ORGANIZATION_ID =&#xA;        dbo.GB_Oracle_Hierarchy.CHILD_ORG_ID&#xA;where HIEARCHY = 'HR'&#xA;&#xA;&#xA;update  dbo.GB_Oracle_Orgs_FlexValues&#xA;set OrganizationParentID= dbo.GB_Oracle_Hierarchy.PARENT_ORG_ID&#xA;from&#xA;        dbo.GB_Oracle_Orgs_FlexValues INNER JOIN&#xA;        dbo.GB_Oracle_Hierarchy ON&#xA;        dbo.GB_Oracle_Orgs_FlexValues.ORGANIZATION_ID =&#xA;        dbo.GB_Oracle_Hierarchy.CHILD_ORG_ID&#xA;where HIEARCHY = 'PROJECTS'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D1DC5397-780A-4000-9B69-376F513E0C61}"
+      DTS:From="Package\SQL Truncate Hierarchy Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Hierarchies" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{70718076-1B64-4D45-8A82-81D2346EA149}"
+      DTS:From="Package\Hierarchies"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Get Projects" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{3107C3CB-19BF-4AD0-8B77-E25F26124FE6}"
+      DTS:From="Package\Get Projects"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\GL Segments" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{C22974D6-2F21-4028-B77C-CAF447A3DB2C}"
+      DTS:From="Package\GL Segments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Org and its Seg2 value 2012" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{0E722801-9847-4AAD-9A71-CD3C2CA5D49F}"
+      DTS:From="Package\Org and its Seg2 value 2012"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Remove apostrophes" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{FFC817D6-5F43-4F4A-B0BE-D4923F1A54E3}"
+      DTS:From="Package\Check Oracle"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\SQL Truncate Hierarchy Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{940ADE3B-FB77-4F2A-B05F-4BCD72B76564}"
+      DTS:From="Package\Check Oracle"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Send Mail Task"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{FFDA10AD-E898-4B60-B890-190AB6DE3FCD\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{FFDA10AD-E898-4B60-B890-190AB6DE3FCD}"
+      DTS:From="Package\Remove apostrophes"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{FFDA10AD-E898-4B60-B890-190AB6DE3FCD}"
+      DTS:To="Package\Update Parent Org" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Check Oracle"
+          TopLeft="309.292452830189,54.0283018867925" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Get Projects"
+          TopLeft="63.2924528301887,237.518867924528" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\GL Segments"
+          TopLeft="58.2924528301887,315.179245283019" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Hierarchies"
+          TopLeft="65.2924528301887,148.858490566038" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Org and its Seg2 value"
+          TopLeft="309.292452830189,396.839622641509" />
+        <NodeLayout
+          Size="179,44"
+          Id="Package\Org and its Seg2 value 2012"
+          TopLeft="44.1037735849056,393.877358490566" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Remove apostrophes"
+          TopLeft="67.2924528301887,474.5" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Send Mail Task"
+          TopLeft="526.141509433962,56.2169811320755" />
+        <NodeLayout
+          Size="136,64"
+          Id="Package\SQL Truncate Hierarchy Table"
+          TopLeft="57.2924528301887,44.1981132075472" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Update Parent Org"
+          TopLeft="70.2924528301887,566.160377358491" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="129.292452830189,108.198113207547">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.6603773584906"
+              Start="0,0"
+              End="0,33.1603773584906">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.1603773584906" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="132.292452830189,192.858490566038">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.6603773584906"
+              Start="0,0"
+              End="0,37.1603773584906">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.1603773584906" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="128.792452830189,281.518867924528">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.6603773584906"
+              Start="0,0"
+              End="0,26.1603773584906">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.1603773584906" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="129.948113207547,359.179245283019">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.6981132075472"
+              Start="0,0"
+              End="0,27.1981132075472">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.1981132075472" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="134.448113207547,437.877358490566">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.6226415094339"
+              Start="0,0"
+              End="0,29.1226415094339">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.1226415094339" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="309.292452830189,76.1132075471698">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-116,0"
+              Start="0,0"
+              End="-108.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-108.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="445.292452830189,77.122641509434">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="80.8490566037736,0"
+              Start="0,0"
+              End="73.3490566037736,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="73.3490566037736,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="21.4331806456368,5,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[{FFDA10AD-E898-4B60-B890-190AB6DE3FCD\}]"
+          TopLeft="136.792452830189,518.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.6603773584906"
+              Start="0,0"
+              End="0,40.1603773584906">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.1603773584906" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="DB 03 Push"
+          ParentId="Package"
+          Size="208,38"
+          Id="20068aa5-1f42-43db-a0f5-f258ba85b76c"
+          TopLeft="5.5,5.5">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11.25"
+              Color="#FF080000">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\GL Segments">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="132,42"
+          Id="Package\GL Segments\Flex Values"
+          TopLeft="10,5.5" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\GL Segments\GL Segments"
+          TopLeft="5.50000000000001,107.5" />
+        <EdgeLayout
+          Id="Package\GL Segments.Paths[OLE DB Source Output]"
+          TopLeft="76,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\GL Segments\GL Segments">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

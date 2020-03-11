@@ -1,0 +1,2012 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/16/2007 10:53:43 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DMDB5P0RD1"
+  DTS:CreatorName="MORTENSON\econzemi"
+  DTS:DTSID="{A79712FF-ED3D-4EFF-819C-3F4F66D190A8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.68"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="ProjectBillingsTableForMRS"
+  DTS:PackageType="5"
+  DTS:VersionBuild="65"
+  DTS:VersionGUID="{2BAB5A2F-A096-4179-B822-43C263FF40F8}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DMAMRI.eul4_us]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5A9A1BE6-FDDA-49ED-806B-1216DD102F40}"
+      DTS:ObjectName="DMAMRI.eul4_us">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=DMAMRI;User ID=eul4_us;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MSPDB05.Mortenson_Hub]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E14F6B28-53A8-47E0-9D73-1AF2698B445F}"
+      DTS:ObjectName="MSPDB05.Mortenson_Hub">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=MSPDB05;Initial Catalog=Mortenson_Hub;Provider=SQLNCLI11;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-ProjectBillingsTableForMRS-{E14F6B28-53A8-47E0-9D73-1AF2698B445F}MSPDB03.Mortenson_Hub;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[mspdb05.Mort_EIS2]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6E22B626-0304-4561-85A4-0F5AB009E6C9}"
+      DTS:ObjectName="mspdb05.Mort_EIS2">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=mspdb05;Initial Catalog=Mort_EIS;Provider=SQLNCLI11;Integrated Security=SSPI;Application Name=SSIS-ProjectBillingsTableForMRS-{6E22B626-0304-4561-85A4-0F5AB009E6C9}mspdb05.Mort_EIS2;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[pmamri.bolinf]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{034715CE-E7D0-4073-88F6-DC9F2518BB58}"
+      DTS:ObjectName="pmamri.bolinf">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=pmamri;User ID=bolinf;Provider=MSDAORA.1;Persist Security Info=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[pmamri.eul4_us]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{337AD3CD-6747-49D5-8F7D-754ECA893A15}"
+      DTS:ObjectName="pmamri.eul4_us">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=pmamri;User ID=eul4_us;Provider=MSDAORA.1;Persist Security Info=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[pmamri.eul4_us 1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6C93DA28-BFDF-4489-93C3-8CD981B3C024}"
+      DTS:ObjectName="pmamri.eul4_us 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=pmamri;User ID=eul4_us;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[tmamri.eul4_us]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3E498BEE-CC72-40BB-A173-AC1A41C7624B}"
+      DTS:ObjectName="tmamri.eul4_us">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=tmamri;User ID=eul4_us;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{78D66774-5564-4DD6-AC36-0DA40DFE3456}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="GL_Rowcount"
+      DTS:ObjectName="Variable">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Cash flow Billings 12-13"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7B39F529-366E-4BD3-AA2F-0530180E3DB7}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Cash flow Billings 12-13"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Cash flow Billings 12-13\cash position source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="cash position source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select
+inv.project_id
+,inv.ra_invoice_number
+,inv.draft_invoice_num
+,inv.draft_invoice_num_credited
+,item.invoice_line_type
+,INV.invoice_date
+,trunc(inv.gl_date, 'MONTH') as gl_month
+/*, (trunc(pcdl.gl_date, ''''MONTH'''')) gl_month */
+,inv.retn_code_combination_id
+,inv.receivable_code_combination_id
+,(item.amount) as TotalInvoiceAmount
+,(case when item.invoice_line_type = 'STANDARD' THEN (item.amount) ELSE 0 END) as StandardAmount
+,(case when item.invoice_line_type = 'RETENTION' THEN (item.amount) ELSE 0 END) as RetentionAmount
+,(case when item.invoice_line_type = 'STANDARD' THEN 0 
+      when item.invoice_line_type = 'RETENTION' THEN 0 
+      else  (item.amount) end) as OtherAmount
+from  apps.pa_draft_invoices_all inv
+INNER JOIN apps.pa_draft_invoice_items item
+on item.project_id = inv.project_id
+and item.draft_invoice_num = inv.draft_invoice_num
+where 1=1
+/*and inv.project_id = 12630*/
+and inv.released_date is not null</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cash flow Billings 12-13\cash position source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[pmamri.eul4_us 1]"
+                  connectionManagerRefId="Package.ConnectionManagers[pmamri.eul4_us 1]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[PROJECT_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ID]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[PROJECT_ID]"
+                      name="PROJECT_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RA_INVOICE_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[RA_INVOICE_NUMBER]"
+                      length="20"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RA_INVOICE_NUMBER]"
+                      name="RA_INVOICE_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[DRAFT_INVOICE_NUM]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[DRAFT_INVOICE_NUM]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[DRAFT_INVOICE_NUM]"
+                      name="DRAFT_INVOICE_NUM"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[DRAFT_INVOICE_NUM_CREDITED]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[DRAFT_INVOICE_NUM_CREDITED]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[DRAFT_INVOICE_NUM_CREDITED]"
+                      name="DRAFT_INVOICE_NUM_CREDITED"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[INVOICE_LINE_TYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_LINE_TYPE]"
+                      length="30"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[INVOICE_LINE_TYPE]"
+                      name="INVOICE_LINE_TYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_DATE]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]"
+                      name="INVOICE_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[GL_MONTH]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[GL_MONTH]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[GL_MONTH]"
+                      name="GL_MONTH"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RETN_CODE_COMBINATION_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[RETN_CODE_COMBINATION_ID]"
+                      length="38"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RETN_CODE_COMBINATION_ID]"
+                      name="RETN_CODE_COMBINATION_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RECEIVABLE_CODE_COMBINATION_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[RECEIVABLE_CODE_COMBINATION_ID]"
+                      length="38"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RECEIVABLE_CODE_COMBINATION_ID]"
+                      name="RECEIVABLE_CODE_COMBINATION_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[TOTALINVOICEAMOUNT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[TOTALINVOICEAMOUNT]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[TOTALINVOICEAMOUNT]"
+                      name="TOTALINVOICEAMOUNT"
+                      precision="22"
+                      scale="5"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[STANDARDAMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[STANDARDAMOUNT]"
+                      length="38"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[STANDARDAMOUNT]"
+                      name="STANDARDAMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RETENTIONAMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[RETENTIONAMOUNT]"
+                      length="38"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RETENTIONAMOUNT]"
+                      name="RETENTIONAMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[OTHERAMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[OTHERAMOUNT]"
+                      length="38"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[OTHERAMOUNT]"
+                      name="OTHERAMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ID]"
+                      dataType="numeric"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[RA_INVOICE_NUMBER]"
+                      dataType="wstr"
+                      length="20"
+                      name="RA_INVOICE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[DRAFT_INVOICE_NUM]"
+                      dataType="numeric"
+                      name="DRAFT_INVOICE_NUM"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[DRAFT_INVOICE_NUM_CREDITED]"
+                      dataType="numeric"
+                      name="DRAFT_INVOICE_NUM_CREDITED"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_LINE_TYPE]"
+                      dataType="wstr"
+                      length="30"
+                      name="INVOICE_LINE_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_DATE]"
+                      dataType="dbTimeStamp"
+                      name="INVOICE_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[GL_MONTH]"
+                      dataType="dbTimeStamp"
+                      name="GL_MONTH" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[RETN_CODE_COMBINATION_ID]"
+                      dataType="wstr"
+                      length="38"
+                      name="RETN_CODE_COMBINATION_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[RECEIVABLE_CODE_COMBINATION_ID]"
+                      dataType="wstr"
+                      length="38"
+                      name="RECEIVABLE_CODE_COMBINATION_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[TOTALINVOICEAMOUNT]"
+                      dataType="numeric"
+                      name="TOTALINVOICEAMOUNT"
+                      precision="22"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[STANDARDAMOUNT]"
+                      dataType="wstr"
+                      length="38"
+                      name="STANDARDAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[RETENTIONAMOUNT]"
+                      dataType="wstr"
+                      length="38"
+                      name="RETENTIONAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].ExternalColumns[OTHERAMOUNT]"
+                      dataType="wstr"
+                      length="38"
+                      name="OTHERAMOUNT" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[PROJECT_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[PROJECT_ID]"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[RA_INVOICE_NUMBER]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[RA_INVOICE_NUMBER]"
+                      name="RA_INVOICE_NUMBER" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[DRAFT_INVOICE_NUM]"
+                      dataType="numeric"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[DRAFT_INVOICE_NUM]"
+                      name="DRAFT_INVOICE_NUM"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[DRAFT_INVOICE_NUM_CREDITED]"
+                      dataType="numeric"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[DRAFT_INVOICE_NUM_CREDITED]"
+                      name="DRAFT_INVOICE_NUM_CREDITED"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[INVOICE_LINE_TYPE]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[INVOICE_LINE_TYPE]"
+                      name="INVOICE_LINE_TYPE" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[INVOICE_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[INVOICE_DATE]"
+                      name="INVOICE_DATE" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[GL_MONTH]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[GL_MONTH]"
+                      name="GL_MONTH" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[RETN_CODE_COMBINATION_ID]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[RETN_CODE_COMBINATION_ID]"
+                      name="RETN_CODE_COMBINATION_ID" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[RECEIVABLE_CODE_COMBINATION_ID]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[RECEIVABLE_CODE_COMBINATION_ID]"
+                      name="RECEIVABLE_CODE_COMBINATION_ID" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[TOTALINVOICEAMOUNT]"
+                      dataType="numeric"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[TOTALINVOICEAMOUNT]"
+                      name="TOTALINVOICEAMOUNT"
+                      precision="22"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[STANDARDAMOUNT]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[STANDARDAMOUNT]"
+                      name="STANDARDAMOUNT" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[RETENTIONAMOUNT]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[RETENTIONAMOUNT]"
+                      name="RETENTIONAMOUNT" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[OTHERAMOUNT]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[OTHERAMOUNT]"
+                      name="OTHERAMOUNT" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cash flow Billings 12-13\CashPosition Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="CashPosition Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[T_BillingCashPosition]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cash flow Billings 12-13\CashPosition Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[mspdb05.Mort_EIS2]"
+                  connectionManagerRefId="Package.ConnectionManagers[mspdb05.Mort_EIS2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[PROJECT_ID]"
+                      cachedDataType="numeric"
+                      cachedName="PROJECT_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_ID]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[PROJECT_ID]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[RA_INVOICE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="RA_INVOICE_NUMBER"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[RA_INVOICE_NUMBER]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RA_INVOICE_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[DRAFT_INVOICE_NUM]"
+                      cachedDataType="numeric"
+                      cachedName="DRAFT_INVOICE_NUM"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[DRAFT_INVOICE_NUM]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[DRAFT_INVOICE_NUM]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[DRAFT_INVOICE_NUM_CREDITED]"
+                      cachedDataType="numeric"
+                      cachedName="DRAFT_INVOICE_NUM_CREDITED"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[DRAFT_INVOICE_NUM_CREDITED]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[DRAFT_INVOICE_NUM_CREDITED]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[INVOICE_LINE_TYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="INVOICE_LINE_TYPE"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_LINE_TYPE]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[INVOICE_LINE_TYPE]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[INVOICE_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="INVOICE_DATE"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[GL_MONTH]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="GL_MONTH"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[GL_MONTH]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[GL_MONTH]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[RETN_CODE_COMBINATION_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="RETN_CODE_COMBINATION_ID"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[RETN_CODE_COMBINATION_ID]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RETN_CODE_COMBINATION_ID]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[RECEIVABLE_CODE_COMBINATION_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="RECEIVABLE_CODE_COMBINATION_ID"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[RECEIVABLE_CODE_COMBINATION_ID]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RECEIVABLE_CODE_COMBINATION_ID]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[TOTALINVOICEAMOUNT]"
+                      cachedDataType="numeric"
+                      cachedName="TOTALINVOICEAMOUNT"
+                      cachedPrecision="22"
+                      cachedScale="5"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[TOTALINVOICEAMOUNT]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[TOTALINVOICEAMOUNT]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[STANDARDAMOUNT]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="STANDARDAMOUNT"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[STANDARDAMOUNT]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[STANDARDAMOUNT]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[RETENTIONAMOUNT]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="RETENTIONAMOUNT"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[RETENTIONAMOUNT]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[RETENTIONAMOUNT]" />
+                    <inputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].Columns[OTHERAMOUNT]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="OTHERAMOUNT"
+                      externalMetadataColumnId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[OTHERAMOUNT]"
+                      lineageId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output].Columns[OTHERAMOUNT]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_ID]"
+                      dataType="numeric"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[RA_INVOICE_NUMBER]"
+                      dataType="wstr"
+                      length="20"
+                      name="RA_INVOICE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[DRAFT_INVOICE_NUM]"
+                      dataType="numeric"
+                      name="DRAFT_INVOICE_NUM"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[DRAFT_INVOICE_NUM_CREDITED]"
+                      dataType="numeric"
+                      name="DRAFT_INVOICE_NUM_CREDITED"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_LINE_TYPE]"
+                      dataType="wstr"
+                      length="30"
+                      name="INVOICE_LINE_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      dataType="dbTimeStamp"
+                      name="INVOICE_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[GL_MONTH]"
+                      dataType="dbTimeStamp"
+                      name="GL_MONTH" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[RETN_CODE_COMBINATION_ID]"
+                      dataType="wstr"
+                      length="38"
+                      name="RETN_CODE_COMBINATION_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[RECEIVABLE_CODE_COMBINATION_ID]"
+                      dataType="wstr"
+                      length="38"
+                      name="RECEIVABLE_CODE_COMBINATION_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[TOTALINVOICEAMOUNT]"
+                      dataType="cy"
+                      name="TOTALINVOICEAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[STANDARDAMOUNT]"
+                      dataType="cy"
+                      name="STANDARDAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[RETENTIONAMOUNT]"
+                      dataType="cy"
+                      name="RETENTIONAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[OTHERAMOUNT]"
+                      dataType="cy"
+                      name="OTHERAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[Autokey]"
+                      dataType="i4"
+                      name="Autokey" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[CreationDate]"
+                      dataType="dbTimeStamp"
+                      name="CreationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input].ExternalColumns[CreatedBy]"
+                      dataType="wstr"
+                      length="50"
+                      name="CreatedBy" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cash flow Billings 12-13\CashPosition Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cash flow Billings 12-13\CashPosition Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cash flow Billings 12-13\CashPosition Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cash flow Billings 12-13\CashPosition Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Cash flow Billings 12-13.Paths[OLE DB Source Output]"
+              endId="Package\Cash flow Billings 12-13\CashPosition Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Cash flow Billings 12-13\cash position source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Check Oracle"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C9478FC9-4486-44FC-9BF1-46881FB116C8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Check Oracle"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server v9; © 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6C93DA28-BFDF-4489-93C3-8CD981B3C024}"
+          SQLTask:SqlStatementSource="select count(*) from pa.pa_projects_all" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Indirect Transaction to Staging Table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{E6A24EF3-6469-47C5-ADC4-6BB452D7446B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Indirect Transaction to Staging Table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v9; (C) 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          engineThreads="5"
+          version="1">
+          <components>
+            <component
+              refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation;Microsoft SqlServer v9; (C) 2005 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="New Oracle PA Billing Transactions for MRS"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT pa.org_id,
+       haou.NAME Organization_name,
+       pa.carrying_out_organization_id,
+       haou2.NAME Project_Organization_name,
+       revenue.project_id,
+       pa.segment1 project_number,
+       pa.NAME project_name,
+       revenue.segment1,
+       revenue.segment2,
+       revenue.segment3,
+       revenue.segment4,
+       revenue.segment5,
+       TRUNC(revenue.gl_date, 'MM') gl_date,
+       TO_DATE(TRUNC(revenue.pa_date)) pa_date,
+       (revenue.Revenue_Amount) Revenue_Amount
+FROM   (SELECT   pdra.project_id,
+                 pdra.gl_date,
+                 pdra.pa_date,
+                 0 AS Invoice_amount,
+                 SUM(NVL(pdri.amount, 0)) AS Revenue_amount,
+                   SUM(NVL(pdri.amount, 0))
+                 * -1 amount,
+                 'Draft2' AS SOURCE,
+                 gl.segment1,
+                 gl.segment2,
+                 gl.segment3,
+                 gl.segment4,
+                 gl.segment5
+        FROM     pa.pa_draft_revenues_all pdra JOIN pa.pa_draft_revenue_items pdri ON pdra.project_id = pdri.project_id
+                 AND                                                                 pdra.draft_revenue_num = pdri.draft_revenue_num
+                 AND                                                                 pdra.draft_revenue_num = pdri.draft_revenue_num
+                 JOIN pa.pa_cust_event_rdl_all pcera ON pdra.project_id = pcera.project_id
+                 AND                                   pdra.draft_revenue_num = pcera.draft_revenue_num
+                 AND                                   pdri.line_num = pcera.draft_revenue_item_line_num
+                 JOIN gl.gl_code_combinations gl ON pcera.code_combination_id = gl.code_combination_id
+        GROUP BY pdra.project_id,
+                 pdra.gl_date,
+                 pdra.pa_date,
+                 gl.segment1,
+                 gl.segment2,
+                 gl.segment3,
+                 gl.segment4,
+                 gl.segment5) revenue
+       LEFT JOIN
+       pa.pa_projects_all pa ON revenue.project_id = pa.project_id
+       JOIN hr.hr_all_organization_units haou ON pa.org_id = haou.organization_id
+       JOIN hr.hr_all_organization_units haou2 ON pa.carrying_out_organization_id = haou2.organization_id
+WHERE  1 = 1
+UNION ALL
+SELECT   org_id,
+         Organization_name,
+         carrying_out_organization_id,
+         Project_Organization_name,
+         project_id,
+         main2.segment1 Project_Number,
+         NAME,
+         build_gl.segment1,
+         build_gl.segment2,
+         build_gl.segment3,
+         '310000' segment4,
+         '000' segment5,
+         TO_DATE('31-DEC-2005', 'DD-MON-YYYY') GL_date,
+         TO_DATE('31-DEC-2005', 'DD-MON-YYYY') pa_date,
+         SUM(Total_Amount) Total_Amount
+FROM     (SELECT   pa.org_id,
+                   pa.carrying_out_organization_id,
+                   HAOU.NAME Organization_Name,
+                   pa.project_type,
+                   main.project_id,
+                   HAOU2.NAME Project_Organization_Name,
+                   pa.segment1,
+                   pa.NAME,
+                   'Revenue' AS expenditure_type,
+                   'Revenue' AS transaction_source,
+                   TRUNC(Trx_date_Adj, 'MM') Trx_date,
+                   main.gl_date,
+                   TRUNC(main.gl_date, 'MM') expenditure_item_date,
+                   SUM(Total_Invoice_Amount) Total_Amount,
+                   SUM(Regular_Invoice_Amount) Regular_Invoice_Amount,
+                   SUM(Retention_Amount) Retention_Amount,
+                   main.gl_period_name,
+                   main.RECEIVABLE_CODE_COMBINATION_ID,
+                   RETN_CODE_COMBINATION_ID,
+                   Code_Combination_ID_adj,
+                   gcc.segment1 segment1_COMPANY,
+                   gcc.segment2 segment2_GROUP,
+                   gcc.segment3 segment3_FUNCTION,
+                   gcc.segment4 segment4_ACCOUNT,
+                   gcc.segment5 segment4_Open
+          FROM     (SELECT   inv.project_id,
+                             inv.draft_invoice_num,
+                             inv.ra_invoice_number,
+                             inv.invoice_date,
+                             inv.approved_date,
+                             inv.released_date,
+                             inv.creation_date,
+                             inv.gl_date GL_Date,
+                             TO_DATE('31-DEC-2005', 'DD-MON-YYYY') Trx_date_Adj,
+                             TO_DATE('31-DEC-2005', 'DD-MON-YYYY') GL_Month_date,
+                             DECODE(inv.gl_date,
+                                    NULL, NULL,
+                                    gl_per.period_name) GL_Period_Name,
+                             pa_per.period_name PA_Period,
+                             SUM(  item.amount
+                                 - DECODE(item.invoice_line_type,
+                                          'RETENTION', item.amount,
+                                          0)) Total_Invoice_Amount,
+                             -SUM(DECODE(item.invoice_line_type,
+                                         'RETENTION', item.amount,
+                                         0)) Retention_Amount,
+                             SUM(item.amount) Regular_Invoice_Amount,
+                             inv.draft_invoice_num_credited,
+                             DECODE(item.invoice_line_type,
+                                    'RETENTION', RETN_CODE_COMBINATION_ID,
+                                    RECEIVABLE_CODE_COMBINATION_ID) Code_Combination_ID_adj,
+                             inv.RECEIVABLE_CODE_COMBINATION_ID,
+                             inv.RETN_CODE_COMBINATION_ID,
+                             item.invoice_line_type
+                    FROM     pa.pa_implementations_all imp,
+                             pa.pa_periods_all pa_per,
+                             gl.gl_period_statuses gl_per,
+                             pa.pa_draft_invoice_items item,
+                             pa.pa_draft_invoices_all inv
+                    WHERE    inv.released_date IS NOT NULL
+                    AND      item.project_id = inv.project_id
+                    AND      item.draft_invoice_num = inv.draft_invoice_num
+                    AND      gl_per.set_of_books_id = imp.set_of_books_id
+                    AND      gl_per.application_id = apps.PA_Period_Process_Pkg.Application_ID
+                    AND      gl_per.adjustment_period_flag = 'N'
+                    AND      TO_DATE('31-DEC-2005', 'DD-MON-YYYY') BETWEEN gl_per.start_date AND gl_per.end_date
+                    AND      inv.pa_date BETWEEN pa_per.start_date AND pa_per.end_date
+                    AND      imp.org_id = inv.org_id
+                    AND      imp.org_id = pa_per.org_id
+                    AND      (   (    item.project_id IN(652, 968, 952, 909, 928, 794, 892, 3155, 1409)
+                                  AND inv.draft_invoice_num = 1
+                                  AND item.line_num = 1)
+                              OR (    item.project_id IN(889, 877)
+                                  AND inv.draft_invoice_num = 6
+                                  AND item.line_num = 1)
+                              OR (    item.project_id IN(933)
+                                  AND inv.draft_invoice_num = 4
+                                  AND item.line_num = 1)
+                              OR (    item.project_id IN(755)
+                                  AND inv.draft_invoice_num = 2
+                                  AND item.line_num = 1))
+                    GROUP BY inv.project_id,
+                             inv.draft_invoice_num,
+                             inv.ra_invoice_number,
+                             inv.invoice_date,
+                             inv.approved_date,
+                             inv.released_date,
+                             inv.creation_date,
+                             inv.gl_date,
+                             TRUNC(inv.gl_date, 'MM'),
+                             CASE
+                                WHEN inv.pa_period_name = 'DEC-05'
+                             AND    inv.gl_period_name &lt;&gt; 'DEC-05'
+                                   THEN TO_DATE('31-DEC-2005', 'DD-MON-YYYY')
+                                ELSE TRUNC(inv.gl_date, 'MM')
+                             END,
+                             gl_per.period_name,
+                             pa_per.period_name,
+                             inv.draft_invoice_num_credited,
+                             RECEIVABLE_CODE_COMBINATION_ID,
+                             RETN_CODE_COMBINATION_ID,
+                             item.invoice_line_type
+                    UNION ALL
+                    SELECT   inv.project_id,
+                             inv.draft_invoice_num,
+                             inv.ra_invoice_number,
+                             inv.invoice_date,
+                             inv.approved_date,
+                             inv.released_date,
+                             inv.creation_date,
+                             inv.gl_date GL_Date,
+                             CASE
+                                WHEN inv.pa_period_name = 'DEC-05'
+                             AND    inv.gl_period_name &lt;&gt; 'DEC-05'
+                                   THEN TO_DATE('31-DEC-2005', 'DD-MON-YYYY')
+                                ELSE TRUNC(inv.gl_date, 'MM')
+                             END Trx_date_Adj,
+                             TRUNC(inv.gl_date, 'MM') GL_Month_date,
+                             DECODE(inv.gl_date,
+                                    NULL, NULL,
+                                    gl_per.period_name) GL_Period_Name,
+                             pa_per.period_name PA_Period,
+                             SUM(  item.amount
+                                 - DECODE(item.invoice_line_type,
+                                          'RETENTION', item.amount,
+                                          0)) Total_Invoice_Amount,
+                             -SUM(DECODE(item.invoice_line_type,
+                                         'RETENTION', item.amount,
+                                         0)) Retention_Amount,
+                             SUM(item.amount) Regular_Invoice_Amount,
+                             inv.draft_invoice_num_credited,
+                             DECODE(item.invoice_line_type,
+                                    'RETENTION', RETN_CODE_COMBINATION_ID,
+                                    RECEIVABLE_CODE_COMBINATION_ID) Code_Combination_ID_adj,
+                             inv.RECEIVABLE_CODE_COMBINATION_ID,
+                             inv.RETN_CODE_COMBINATION_ID,
+                             item.invoice_line_type
+                    FROM     pa.pa_implementations_all imp,
+                             pa.pa_periods_all pa_per,
+                             gl.gl_period_statuses gl_per,
+                             pa.pa_draft_invoice_items item,
+                             pa.pa_draft_invoices_all inv
+                    WHERE    inv.released_date IS NOT NULL
+                    AND      item.project_id = inv.project_id
+                    AND      item.draft_invoice_num = inv.draft_invoice_num
+                    AND      gl_per.set_of_books_id = imp.set_of_books_id
+                    AND      gl_per.application_id = apps.PA_Period_Process_Pkg.Application_ID
+                    AND      gl_per.adjustment_period_flag = 'N'
+                    AND      NVL(CASE
+                                    WHEN inv.pa_period_name = 'DEC-05'
+                                 AND    inv.gl_period_name &lt;&gt; 'DEC-05'
+                                       THEN TO_DATE('31-DEC-2005', 'DD-MON-YYYY')
+                                    ELSE TRUNC(inv.gl_date, 'MM')
+                                 END, TRUNC(SYSDATE)) BETWEEN gl_per.start_date AND gl_per.end_date
+                    AND      inv.pa_date BETWEEN pa_per.start_date AND pa_per.end_date
+                    AND      inv.pa_period_name = 'DEC-05'
+                    AND      imp.org_id = inv.org_id
+                    AND      imp.org_id = pa_per.org_id
+                    GROUP BY inv.project_id,
+                             inv.draft_invoice_num,
+                             inv.ra_invoice_number,
+                             inv.invoice_date,
+                             inv.approved_date,
+                             inv.released_date,
+                             inv.creation_date,
+                             inv.gl_date,
+                             TRUNC(inv.gl_date, 'MM'),
+                             CASE
+                                WHEN inv.pa_period_name = 'DEC-05'
+                             AND    inv.gl_period_name &lt;&gt; 'DEC-05'
+                                   THEN TO_DATE('31-DEC-2005', 'DD-MON-YYYY')
+                                ELSE TRUNC(inv.gl_date, 'MM')
+                             END,
+                             gl_per.period_name,
+                             pa_per.period_name,
+                             inv.draft_invoice_num_credited,
+                             RECEIVABLE_CODE_COMBINATION_ID,
+                             RETN_CODE_COMBINATION_ID,
+                             item.invoice_line_type) MAIN
+                   JOIN
+                   pa.pa_projects_all pa ON main.project_id = pa.project_id
+                   JOIN HR.HR_ALL_ORGANIZATION_UNITS HAOU ON pa.Org_id = HAOU.Organization_id
+                   JOIN HR.HR_ALL_ORGANIZATION_UNITS HAOU2 ON PA.Carrying_out_organization_id = HAOU2.Organization_id
+                   JOIN apps.gl_code_combinations gcc ON main.Code_Combination_ID_adj = gcc.code_combination_id
+          GROUP BY pa.org_id,
+                   pa.carrying_out_organization_id,
+                   HAOU.NAME,
+                   pa.project_type,
+                   main.project_id,
+                   HAOU2.NAME,
+                   pa.segment1,
+                   pa.NAME,
+                   TRUNC(Trx_date_Adj, 'MM'),
+                   main.gl_date,
+                   TRUNC(main.gl_date, 'MM'),
+                   main.gl_period_name,
+                   main.RECEIVABLE_CODE_COMBINATION_ID,
+                   RETN_CODE_COMBINATION_ID,
+                   Code_Combination_ID_adj,
+                   gcc.segment1,
+                   gcc.segment2,
+                   gcc.segment3,
+                   gcc.segment4,
+                   gcc.segment5) Main2
+         JOIN
+         (SELECT HOU2.ORGANIZATION_ID,
+                 HOU2.NAME ORG_NAME,
+                 SEG1.SEGMENT1,
+                 SEG2.SEGMENT2,
+                 SEG3.SEGMENT3
+          FROM   apps.hr_organization_units hou2,
+                 (SELECT hou.organization_id,
+                         hou.NAME,
+                         psvl.segment_value Segment1
+                  FROM   pa.pa_segment_value_lookups psvl,
+                         pa.pa_segment_value_lookup_sets psvls,
+                         apps.hr_organization_units hou
+                  WHERE  psvl.segment_value_lookup_set_id = psvls.segment_value_lookup_set_id
+                  AND    psvl.segment_value_lookup = hou.NAME
+                  AND    psvls.segment_value_lookup_set_name = 'Comp From Project Org') SEG1,
+                 (SELECT hou.organization_id,
+                         hou.NAME,
+                         psvl.segment_value Segment2
+                  FROM   pa.pa_segment_value_lookups psvl,
+                         pa.pa_segment_value_lookup_sets psvls,
+                         apps.hr_organization_units hou
+                  WHERE  psvl.segment_value_lookup_set_id = psvls.segment_value_lookup_set_id
+                  AND    psvl.segment_value_lookup = hou.NAME
+                  AND    psvls.segment_value_lookup_set_name = 'Group From Project Org') SEG2,
+                 (SELECT hou.organization_id,
+                         hou.NAME,
+                         psvl.segment_value Segment3
+                  FROM   pa.pa_segment_value_lookups psvl,
+                         pa.pa_segment_value_lookup_sets psvls,
+                         apps.hr_organization_units hou
+                  WHERE  psvl.segment_value_lookup_set_id = psvls.segment_value_lookup_set_id
+                  AND    psvl.segment_value_lookup = hou.NAME
+                  AND    psvls.segment_value_lookup_set_name = 'Function From Project Org') SEG3
+          WHERE  hou2.organization_id = SEG1.ORGANIZATION_ID(+)
+          AND    hou2.organization_id = SEG2.ORGANIZATION_ID(+)
+          AND    hou2.organization_id = SEG3.ORGANIZATION_ID(+)
+          AND    hou2.internal_external_flag = 'INT'
+          AND    HOU2.LOCATION_ID IS NOT NULL) Build_GL ON carrying_out_organization_id = build_GL.ORGANIZATION_ID
+GROUP BY org_id,
+         Organization_name,
+         carrying_out_organization_id,
+         Project_Organization_name,
+         project_id,
+         main2.segment1,
+         NAME,
+         build_gl.segment1,
+         build_gl.segment2,
+         build_gl.segment3</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[pmamri.eul4_us 1]"
+                  connectionManagerRefId="Package.ConnectionManagers[pmamri.eul4_us 1]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[ORG_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[ORG_ID]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[ORG_ID]"
+                      name="ORG_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[ORGANIZATION_NAME]"
+                      length="240"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[ORGANIZATION_NAME]"
+                      name="ORGANIZATION_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ORGANIZATION_NAME]"
+                      length="240"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_ORGANIZATION_NAME]"
+                      name="PROJECT_ORGANIZATION_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ID]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_ID]"
+                      name="PROJECT_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_NUMBER]"
+                      length="25"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_NUMBER]"
+                      name="PROJECT_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_NAME]"
+                      length="30"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_NAME]"
+                      name="PROJECT_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT1]"
+                      length="70"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT1]"
+                      name="SEGMENT1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT2]"
+                      length="70"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT2]"
+                      name="SEGMENT2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT3]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT3]"
+                      length="70"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT3]"
+                      name="SEGMENT3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT4]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT4]"
+                      length="25"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT4]"
+                      name="SEGMENT4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT5]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT5]"
+                      length="25"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT5]"
+                      name="SEGMENT5"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[GL_DATE]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[GL_DATE]"
+                      name="GL_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PA_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[PA_DATE]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PA_DATE]"
+                      name="PA_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[REVENUE_AMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[REVENUE_AMOUNT]"
+                      length="38"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[REVENUE_AMOUNT]"
+                      name="REVENUE_AMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[ORG_ID]"
+                      dataType="numeric"
+                      name="ORG_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="ORGANIZATION_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="PROJECT_ORGANIZATION_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ID]"
+                      dataType="numeric"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_NUMBER]"
+                      dataType="wstr"
+                      length="25"
+                      name="PROJECT_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      name="PROJECT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT1]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT1" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT2]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT2" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT3]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT3" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT4]"
+                      dataType="wstr"
+                      length="25"
+                      name="SEGMENT4" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[SEGMENT5]"
+                      dataType="wstr"
+                      length="25"
+                      name="SEGMENT5" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      name="GL_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[PA_DATE]"
+                      dataType="dbTimeStamp"
+                      name="PA_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].ExternalColumns[REVENUE_AMOUNT]"
+                      dataType="wstr"
+                      length="38"
+                      name="REVENUE_AMOUNT" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[ORG_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[ORG_ID]"
+                      name="ORG_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[ORGANIZATION_NAME]"
+                      name="ORGANIZATION_NAME" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[PROJECT_ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[PROJECT_ORGANIZATION_NAME]"
+                      name="PROJECT_ORGANIZATION_NAME" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[PROJECT_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[PROJECT_ID]"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[PROJECT_NUMBER]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[PROJECT_NUMBER]"
+                      name="PROJECT_NUMBER" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[PROJECT_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[PROJECT_NAME]"
+                      name="PROJECT_NAME" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[SEGMENT1]"
+                      dataType="wstr"
+                      length="70"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[SEGMENT1]"
+                      name="SEGMENT1" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[SEGMENT2]"
+                      dataType="wstr"
+                      length="70"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[SEGMENT2]"
+                      name="SEGMENT2" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[SEGMENT3]"
+                      dataType="wstr"
+                      length="70"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[SEGMENT3]"
+                      name="SEGMENT3" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[SEGMENT4]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[SEGMENT4]"
+                      name="SEGMENT4" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[SEGMENT5]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[SEGMENT5]"
+                      name="SEGMENT5" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[GL_DATE]"
+                      name="GL_DATE" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[PA_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[PA_DATE]"
+                      name="PA_DATE" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[REVENUE_AMOUNT]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Error Output].Columns[REVENUE_AMOUNT]"
+                      name="REVENUE_AMOUNT" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation;Microsoft SqlServer v9; (C) 2005 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Oracle Project Revenue"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Oracle_Project_Revenue]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destinaton. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MSPDB05.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[MSPDB05.Mortenson_Hub]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[ORG_ID]"
+                      cachedDataType="numeric"
+                      cachedName="ORG_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[ORG_ID]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[ORG_ID]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[ORGANIZATION_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="ORGANIZATION_NAME"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_NAME]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[ORGANIZATION_NAME]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      cachedDataType="numeric"
+                      cachedName="CARRYING_OUT_ORGANIZATION_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[CARRYING_OUT_ORGANIZATION_ID]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[PROJECT_ORGANIZATION_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="PROJECT_ORGANIZATION_NAME"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_ORGANIZATION_NAME]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_ORGANIZATION_NAME]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[PROJECT_ID]"
+                      cachedDataType="numeric"
+                      cachedName="PROJECT_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_ID]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_ID]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[PROJECT_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="25"
+                      cachedName="PROJECT_NUMBER"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_NUMBER]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[PROJECT_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="PROJECT_NAME"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_NAME]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PROJECT_NAME]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[SEGMENT1]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="SEGMENT1"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT1]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT1]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[SEGMENT2]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="SEGMENT2"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT2]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT2]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[SEGMENT3]"
+                      cachedDataType="wstr"
+                      cachedLength="70"
+                      cachedName="SEGMENT3"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT3]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT3]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[SEGMENT4]"
+                      cachedDataType="wstr"
+                      cachedLength="25"
+                      cachedName="SEGMENT4"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT4]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT4]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[SEGMENT5]"
+                      cachedDataType="wstr"
+                      cachedLength="25"
+                      cachedName="SEGMENT5"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT5]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[SEGMENT5]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[GL_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="GL_DATE"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[GL_DATE]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[GL_DATE]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[PA_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="PA_DATE"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[PA_DATE]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[PA_DATE]" />
+                    <inputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].Columns[REVENUE_AMOUNT]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="REVENUE_AMOUNT"
+                      externalMetadataColumnId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[REVENUE_AMOUNT]"
+                      lineageId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output].Columns[REVENUE_AMOUNT]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[Project_RevKey]"
+                      dataType="i4"
+                      name="Project_RevKey" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[ORG_ID]"
+                      dataType="numeric"
+                      name="ORG_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="ORGANIZATION_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="PROJECT_ORGANIZATION_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_ID]"
+                      dataType="numeric"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_NUMBER]"
+                      dataType="wstr"
+                      length="25"
+                      name="PROJECT_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      name="PROJECT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT1]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT1" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT2]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT2" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT3]"
+                      dataType="wstr"
+                      length="70"
+                      name="SEGMENT3" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT4]"
+                      dataType="wstr"
+                      length="25"
+                      name="SEGMENT4" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[SEGMENT5]"
+                      dataType="wstr"
+                      length="25"
+                      name="SEGMENT5" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      name="GL_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[PA_DATE]"
+                      dataType="dbTimeStamp"
+                      name="PA_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input].ExternalColumns[REVENUE_AMOUNT]"
+                      dataType="numeric"
+                      name="REVENUE_AMOUNT"
+                      precision="28"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Indirect Transaction to Staging Table.Paths[OLE DB Source Output]"
+              endId="Package\Indirect Transaction to Staging Table\Oracle Project Revenue.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate CP Billings"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{98B245F3-28E8-474D-A927-9F39658C8A39}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate CP Billings"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6E22B626-0304-4561-85A4-0F5AB009E6C9}"
+          SQLTask:SqlStatementSource="truncate table mort_eis.dbo.T_BillingCashPosition" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Oracle Project Revenue"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F4D72CED-4164-4898-9ABB-D76B9188F2F0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Oracle Project Revenue"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server v9; © 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E14F6B28-53A8-47E0-9D73-1AF2698B445F}"
+          SQLTask:SqlStatementSource="truncate table Oracle_Project_Revenue" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Log table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0D4DF6CF-2B8F-490A-8470-27236DB9FFB2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Log table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server v9; © 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E14F6B28-53A8-47E0-9D73-1AF2698B445F}"
+          SQLTask:SqlStatementSource="INSERT INTO [Mortenson_Hub].[dbo].[X_DTS_ExecutionLog]&#xA;           ([PackageName]&#xA;           ,[ExecutionDate]&#xA;           ,[WhoExecuted])&#xA;     VALUES ('Direct Project Billings',getdate(),user_name())" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{FD703E45-0F07-4624-A6DA-2B1451C65172}"
+      DTS:From="Package\Truncate Oracle Project Revenue"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Indirect Transaction to Staging Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{02B104EE-3C78-4269-9FA2-F4313A3CD869}"
+      DTS:From="Package\Indirect Transaction to Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Update Log table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{A5E121EC-D3EB-41B3-AE7D-7330486D74CA}"
+      DTS:From="Package\Update Log table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Truncate CP Billings" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{8032AF8F-45EC-4A0D-BD25-EBE1CDFC2386}"
+      DTS:From="Package\Truncate CP Billings"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Cash flow Billings 12-13" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{7C3BE97A-411F-4DC0-ABDC-34FB706B8B9A}"
+      DTS:From="Package\Check Oracle"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Truncate Oracle Project Revenue" />
+  </DTS:PrecedenceConstraints>
+  <DTS:PackageVariables>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{A4C2419B-37A0-4B95-B870-13D299182AEA}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{7B39F529-366E-4BD3-AA2F-0530180E3DB7}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;TaskHost xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsDataFlowDiagram&gt;&lt;dwd:BoundingTop&gt;2063&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="8" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="0" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="33602" y="16245" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="0" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01000000900144420100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Source" left="6112" top="2063" logicalid="4" controlid="4" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Cash flow Billings 12-13\cash position source" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Destination" left="7541" top="5159" logicalid="5" controlid="5" masterid="0" hint1="0" hint2="0" width="5001" height="1190" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="0008000089130000a6040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Cash flow Billings 12-13\CashPosition Destination" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="7512" top="2828" logicalid="6" controlid="6" masterid="0" hint1="0" hint2="0" width="2929" height="2831" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Cash flow Billings 12-13.Paths[OLE DB Source Output]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="4" destid="5" sourceattachpoint="7" destattachpoint="8" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="7911" y="3227" /&gt;&lt;point x="7911" y="4260" /&gt;&lt;point x="10041" y="4260" /&gt;&lt;point x="10041" y="5159" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;/dwd:DtsDataFlowDiagram&gt;&lt;dwd:DtsComponentDesignerPropertiesList&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;55	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;1	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;55	TableInfoObjectType&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:string"&gt;Table&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;/dwd:DtsComponentDesignerPropertiesList&gt;&lt;/TaskHost&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{3EDC4EB9-D664-48AF-AA2F-B986FB305B63}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{7B39F529-366E-4BD3-AA2F-0530180E3DB7}-72">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PipelinePath xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:SourceName&gt;OLE DB Source Output&lt;/dwd:SourceName&gt;&lt;dwd:DestinationName&gt;OLE DB Destination Input&lt;/dwd:DestinationName&gt;&lt;/PipelinePath&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{B471A28C-D74C-40DD-B249-E6ADA4782438}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{02B104EE-3C78-4269-9FA2-F4313A3CD869}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{3B499611-807D-48AF-9F85-B463411280E9}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{8032AF8F-45EC-4A0D-BD25-EBE1CDFC2386}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{A11EFDB1-6CE2-46E3-9E34-73F536A5A270}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{A5E121EC-D3EB-41B3-AE7D-7330486D74CA}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{871A89B3-D917-4279-AC9C-7279BCD85F3C}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{7C3BE97A-411F-4DC0-ABDC-34FB706B8B9A}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{3A18D9E6-D2D7-423F-B0F8-1FA64284BC4B}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{E6A24EF3-6469-47C5-ADC4-6BB452D7446B}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;TaskHost xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsDataFlowDiagram&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="12" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="-2502" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="28893" y="12330" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="0" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01000000900144420100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Source" left="0" top="-1502" logicalid="4" controlid="1" masterid="0" hint1="0" hint2="0" width="5583" height="1720" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="00080000cf150000b8060000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Indirect Transaction to Staging Table\New Oracle PA Billing Transactions for MRS" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Destination" left="3757" top="2705" logicalid="5" controlid="2" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Indirect Transaction to Staging Table\Oracle Project Revenue" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="2392" top="-181" logicalid="6" controlid="3" masterid="0" hint1="0" hint2="0" width="3564" height="3386" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Indirect Transaction to Staging Table.Paths[OLE DB Source Output]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="1" destid="2" sourceattachpoint="9" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="2791" y="218" /&gt;&lt;point x="2791" y="1493" /&gt;&lt;point x="5556" y="1493" /&gt;&lt;point x="5556" y="2705" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;dwd:PersistedViewPortTop&gt;-2502&lt;/dwd:PersistedViewPortTop&gt;&lt;/dwd:DtsDataFlowDiagram&gt;&lt;dwd:DtsComponentDesignerPropertiesList&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;3414	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;4138	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;4924	TableInfoObjectType&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:string"&gt;Table&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;806	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;806	TableInfoObjectType&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:string"&gt;Table&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;95	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;3414	TableInfoObjectType&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:string"&gt;Table&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;4801	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;1	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;4924	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;4138	TableInfoObjectType&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:string"&gt;Table&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;/dwd:DtsComponentDesignerPropertiesList&gt;&lt;/TaskHost&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{6A3B7C84-68ED-460B-807F-0B7F73945AF4}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{E6A24EF3-6469-47C5-ADC4-6BB452D7446B}-5526">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PipelinePath xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:SourceName&gt;OLE DB Source Output&lt;/dwd:SourceName&gt;&lt;dwd:DestinationName&gt;OLE DB Destination Input&lt;/dwd:DestinationName&gt;&lt;/PipelinePath&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{776BB326-FDB7-45ED-84F8-753601EE45C9}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{FD703E45-0F07-4624-A6DA-2B1451C65172}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{84CF2DFE-660A-47E3-914F-BE01C03D05D8}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="package-diagram">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsControlFlowDiagram&gt;&lt;dwd:BoundingTop&gt;-392&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="23" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="-1392" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="32438" y="18283" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="251" top="1772" logicalid="8" controlid="1" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Truncate Oracle Project Revenue" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="0" top="3936" logicalid="9" controlid="2" masterid="0" hint1="0" hint2="0" width="4101" height="2170" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="00080000051000007a080000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Indirect Transaction to Staging Table" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="1651" top="2537" logicalid="10" controlid="3" masterid="0" hint1="0" hint2="0" width="799" height="1899" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="1" destid="2" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="2050" y="2936" /&gt;&lt;point x="2050" y="3936" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="251" top="-392" logicalid="11" controlid="4" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Check Oracle" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="1651" top="373" logicalid="12" controlid="5" masterid="0" hint1="0" hint2="0" width="799" height="1899" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 4]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="4" destid="1" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="2050" y="772" /&gt;&lt;point x="2050" y="1772" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="7329" top="4675" logicalid="13" controlid="6" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Update Log table" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="3702" top="4622" logicalid="14" controlid="7" masterid="0" hint1="0" hint2="0" width="3927" height="1035" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 1]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="2" destid="6" sourceattachpoint="17" destattachpoint="14" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="4101" y="5021" /&gt;&lt;point x="5715" y="5021" /&gt;&lt;point x="5715" y="5257" /&gt;&lt;point x="7329" y="5257" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="10001" top="566" logicalid="18" controlid="11" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Cash flow Billings 12-13" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="8837" top="2629" logicalid="20" controlid="13" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Truncate CP Billings" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="8729" top="3294" logicalid="21" controlid="14" masterid="0" hint1="0" hint2="0" width="2307" height="1781" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 2]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="6" destid="13" sourceattachpoint="6" destattachpoint="7" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="9128" y="4675" /&gt;&lt;point x="9128" y="4234" /&gt;&lt;point x="10636" y="4234" /&gt;&lt;point x="10636" y="3793" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="10237" top="1231" logicalid="22" controlid="15" masterid="0" hint1="0" hint2="0" width="1963" height="1798" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 3]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="13" destid="11" sourceattachpoint="6" destattachpoint="7" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="10636" y="2629" /&gt;&lt;point x="10636" y="2179" /&gt;&lt;point x="11800" y="2179" /&gt;&lt;point x="11800" y="1730" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;dwd:PersistedViewPortTop&gt;-1392&lt;/dwd:PersistedViewPortTop&gt;&lt;/dwd:DtsControlFlowDiagram&gt;&lt;/Package&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{A29F3527-734E-4150-ADE8-B8C6534F1052}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="package-diagram">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsControlFlowDiagram&gt;&lt;dwd:BoundingTop&gt;-392&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="23" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="-1392" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="32438" y="18283" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="251" top="1772" logicalid="8" controlid="1" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Truncate Oracle Project Revenue" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="0" top="3936" logicalid="9" controlid="2" masterid="0" hint1="0" hint2="0" width="4101" height="2170" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="00080000051000007a080000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Indirect Transaction to Staging Table" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="1651" top="2537" logicalid="10" controlid="3" masterid="0" hint1="0" hint2="0" width="799" height="1899" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="1" destid="2" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="2050" y="2936" /&gt;&lt;point x="2050" y="3936" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="251" top="-392" logicalid="11" controlid="4" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Check Oracle" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="1651" top="373" logicalid="12" controlid="5" masterid="0" hint1="0" hint2="0" width="799" height="1899" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 4]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="4" destid="1" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="2050" y="772" /&gt;&lt;point x="2050" y="1772" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="7329" top="4675" logicalid="13" controlid="6" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Update Log table" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="3702" top="4622" logicalid="14" controlid="7" masterid="0" hint1="0" hint2="0" width="3927" height="1035" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 1]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="2" destid="6" sourceattachpoint="17" destattachpoint="14" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="4101" y="5021" /&gt;&lt;point x="5715" y="5021" /&gt;&lt;point x="5715" y="5257" /&gt;&lt;point x="7329" y="5257" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="10001" top="566" logicalid="18" controlid="11" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Cash flow Billings 12-13" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="8837" top="2629" logicalid="20" controlid="13" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Truncate CP Billings" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="8729" top="3294" logicalid="21" controlid="14" masterid="0" hint1="0" hint2="0" width="2307" height="1781" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 2]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="6" destid="13" sourceattachpoint="6" destattachpoint="7" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="9128" y="4675" /&gt;&lt;point x="9128" y="4234" /&gt;&lt;point x="10636" y="4234" /&gt;&lt;point x="10636" y="3793" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="10237" top="1231" logicalid="22" controlid="15" masterid="0" hint1="0" hint2="0" width="1963" height="1798" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 3]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="13" destid="11" sourceattachpoint="6" destattachpoint="7" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="10636" y="2629" /&gt;&lt;point x="10636" y="2179" /&gt;&lt;point x="11800" y="2179" /&gt;&lt;point x="11800" y="1730" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;dwd:PersistedViewPortTop&gt;-1392&lt;/dwd:PersistedViewPortTop&gt;&lt;/dwd:DtsControlFlowDiagram&gt;&lt;/Package&gt;</DTS:Property>
+    </DTS:PackageVariable>
+  </DTS:PackageVariables>
+</DTS:Executable>

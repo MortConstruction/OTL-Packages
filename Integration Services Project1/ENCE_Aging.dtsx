@@ -1,0 +1,1484 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/18/2013 11:15:16 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MSPDB05"
+  DTS:CreatorName="MORTENSON\econzemi"
+  DTS:DTSID="{62FEF145-4D1B-4799-BA25-0C3102056C2A}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.68"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="ENCE_Aging"
+  DTS:PackageType="5"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{BB3BFA6B-B5A2-4375-9A86-F1FECAA7EF53}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[mspdb05.Mort_EIS2]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4B0D97F0-C5C0-4796-B50C-9C9908B0DE62}"
+      DTS:ObjectName="mspdb05.Mort_EIS2">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=mspdb05;Initial Catalog=Mort_EIS;Provider=SQLNCLI11;Integrated Security=SSPI;Application Name=SSIS-ENCE_Aging-{4B0D97F0-C5C0-4796-B50C-9C9908B0DE62}mspdb05.Mort_EIS2;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[pmamri.eul4_us]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{39BE2BE4-5AE0-4530-9482-D057E3AE9F90}"
+      DTS:ObjectName="pmamri.eul4_us">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=pmamri;User ID=eul4_us;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Ence Invoices"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{0EAF1E03-1B66-4B1C-8DCD-899DF9D7BC1B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Ence Invoices"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Ence Invoices\ENCE Invoices"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="ENCE Invoices"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select  HAOU.NAME	ORGANIZATION
+      ,haou.organization_id  
+       ,pp.project_id
+       ,PP.NAME 		PROJECT_NAME
+       ,HAO.NAME	 	PROJECT_ORGANIZATION_NAME
+        ,HAO.organization_id as Carrying_Out_Organization_ID
+       ,PP.segment1                   PROJECT_NO
+       ,HP.party_name               CUSTOMER
+       ,HP.party_number                CUSTOMER_NUMBER
+       ,RCT.trx_number              INVOICE_NUMBER
+       ,RCT.customer_trx_id      TRX_ID
+       ,RCT.trx_date                  INVOICE_DATE
+       ,APS.due_date                DUE_DATE
+       ,APS.gl_date                   GL_DATE
+       ,trunc(aps.gl_date_closed)    GL_Date_Closed
+       ,aps.status
+      ,aps.class
+       --'**MEASURES*******************************
+       ,nvl(aps.amount_due_original,0) amount_due_original
+       ,nvl(aps.amount_due_remaining,0) amount_due_remaining
+from apps.pa_projects_all          PP
+Inner join apps.ra_customer_trx_all      RCT
+  on RCT.interface_header_attribute1 = PP.segment1 
+INNER JOIN apps.ar_payment_schedules_all APS
+on RCT.customer_trx_id = APS.customer_trx_id
+INNER JOIN apps.hz_cust_accounts     HCA
+on    HCA.cust_account_id = APS.customer_id
+INNER JOIN  apps.hz_parties           HP
+on   HCA.party_id = HP.party_id
+INNER JOIN apps.hr_operating_units    HAOU
+on HAOU.organization_id = PP.org_id
+INNER JOIN apps.hr_all_organization_units HAO
+on HAO.organization_id = PP.carrying_out_organization_id
+where 1=1 
+/*--and  HAO.organization_id = 223 /*194*/  /*and haou.organization_id = 84 */
+--and RCT.trx_number in ('125835','125833') --RCT.customer_trx_id
+--AND trunc(aps.gl_date )&lt;=to_Date('05/31/2013','MM/DD/YYYY')
+--AND trunc(aps.gl_date_closed) &gt;  to_Date('05/31/2013','MM/DD/YYYY')
+--AND trunc(aps.gl_date )&lt;= trunc(TO_DATE(:P_THROUGH_DATE,'RRRR/MM/DD HH24:MI:SS'))
+--AND trunc(aps.gl_date_closed) &gt;  trunc(TO_DATE(:P_THROUGH_DATE,'RRRR/MM/DD HH24:MI:SS'))
+--and upper(RCT.trx_number) like '%RET%'
+ --and  aps.status &lt;&gt; 'CL' */</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Ence Invoices\ENCE Invoices.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[pmamri.eul4_us]"
+                  connectionManagerRefId="Package.ConnectionManagers[pmamri.eul4_us]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[ORGANIZATION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[ORGANIZATION]"
+                      length="240"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[ORGANIZATION]"
+                      name="ORGANIZATION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[ORGANIZATION_ID]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]"
+                      name="ORGANIZATION_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ID]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_ID]"
+                      name="PROJECT_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_NAME]"
+                      length="31"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_NAME]"
+                      name="PROJECT_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ORGANIZATION_NAME]"
+                      length="240"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_ORGANIZATION_NAME]"
+                      name="PROJECT_ORGANIZATION_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_NO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_NO]"
+                      length="25"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_NO]"
+                      name="PROJECT_NO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CUSTOMER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[CUSTOMER]"
+                      length="360"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CUSTOMER]"
+                      name="CUSTOMER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CUSTOMER_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[CUSTOMER_NUMBER]"
+                      length="30"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CUSTOMER_NUMBER]"
+                      name="CUSTOMER_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[INVOICE_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_NUMBER]"
+                      length="20"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[INVOICE_NUMBER]"
+                      name="INVOICE_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[TRX_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[TRX_ID]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[TRX_ID]"
+                      name="TRX_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_DATE]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]"
+                      name="INVOICE_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[DUE_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[DUE_DATE]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[DUE_DATE]"
+                      name="DUE_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[GL_DATE]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[GL_DATE]"
+                      name="GL_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[GL_DATE_CLOSED]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[GL_DATE_CLOSED]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[GL_DATE_CLOSED]"
+                      name="GL_DATE_CLOSED"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[STATUS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[STATUS]"
+                      length="30"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[STATUS]"
+                      name="STATUS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[AMOUNT_DUE_ORIGINAL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[AMOUNT_DUE_ORIGINAL]"
+                      length="38"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[AMOUNT_DUE_ORIGINAL]"
+                      name="AMOUNT_DUE_ORIGINAL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[AMOUNT_DUE_REMAINING]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[AMOUNT_DUE_REMAINING]"
+                      length="38"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[AMOUNT_DUE_REMAINING]"
+                      name="AMOUNT_DUE_REMAINING"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CLASS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[CLASS]"
+                      length="20"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CLASS]"
+                      name="CLASS"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[ORGANIZATION]"
+                      dataType="wstr"
+                      length="240"
+                      name="ORGANIZATION" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[ORGANIZATION_ID]"
+                      dataType="numeric"
+                      name="ORGANIZATION_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ID]"
+                      dataType="numeric"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      name="PROJECT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="PROJECT_ORGANIZATION_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[PROJECT_NO]"
+                      dataType="wstr"
+                      length="25"
+                      name="PROJECT_NO" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[CUSTOMER]"
+                      dataType="wstr"
+                      length="360"
+                      name="CUSTOMER" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[CUSTOMER_NUMBER]"
+                      dataType="wstr"
+                      length="30"
+                      name="CUSTOMER_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_NUMBER]"
+                      dataType="wstr"
+                      length="20"
+                      name="INVOICE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[TRX_ID]"
+                      dataType="numeric"
+                      name="TRX_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[INVOICE_DATE]"
+                      dataType="dbTimeStamp"
+                      name="INVOICE_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[DUE_DATE]"
+                      dataType="dbTimeStamp"
+                      name="DUE_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      name="GL_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[GL_DATE_CLOSED]"
+                      dataType="dbTimeStamp"
+                      name="GL_DATE_CLOSED" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[STATUS]"
+                      dataType="wstr"
+                      length="30"
+                      name="STATUS" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[AMOUNT_DUE_ORIGINAL]"
+                      dataType="wstr"
+                      length="38"
+                      name="AMOUNT_DUE_ORIGINAL" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[AMOUNT_DUE_REMAINING]"
+                      dataType="wstr"
+                      length="38"
+                      name="AMOUNT_DUE_REMAINING" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].ExternalColumns[CLASS]"
+                      dataType="wstr"
+                      length="20"
+                      name="CLASS" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[ORGANIZATION]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[ORGANIZATION]"
+                      name="ORGANIZATION" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[ORGANIZATION_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[ORGANIZATION_ID]"
+                      name="ORGANIZATION_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[PROJECT_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[PROJECT_ID]"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[PROJECT_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[PROJECT_NAME]"
+                      name="PROJECT_NAME" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[PROJECT_ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[PROJECT_ORGANIZATION_NAME]"
+                      name="PROJECT_ORGANIZATION_NAME" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[PROJECT_NO]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[PROJECT_NO]"
+                      name="PROJECT_NO" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[CUSTOMER]"
+                      dataType="wstr"
+                      length="360"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[CUSTOMER]"
+                      name="CUSTOMER" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[CUSTOMER_NUMBER]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[CUSTOMER_NUMBER]"
+                      name="CUSTOMER_NUMBER" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[INVOICE_NUMBER]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[INVOICE_NUMBER]"
+                      name="INVOICE_NUMBER" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[TRX_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[TRX_ID]"
+                      name="TRX_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[INVOICE_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[INVOICE_DATE]"
+                      name="INVOICE_DATE" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[DUE_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[DUE_DATE]"
+                      name="DUE_DATE" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[GL_DATE]"
+                      name="GL_DATE" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[GL_DATE_CLOSED]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[GL_DATE_CLOSED]"
+                      name="GL_DATE_CLOSED" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[STATUS]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[STATUS]"
+                      name="STATUS" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[CLASS]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[CLASS]"
+                      name="CLASS" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[AMOUNT_DUE_ORIGINAL]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[AMOUNT_DUE_ORIGINAL]"
+                      name="AMOUNT_DUE_ORIGINAL" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[AMOUNT_DUE_REMAINING]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[AMOUNT_DUE_REMAINING]"
+                      name="AMOUNT_DUE_REMAINING" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Ence Invoices\SQL ENCE Invoices"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="SQL ENCE Invoices"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ENCE_InvoicesCore]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Ence Invoices\SQL ENCE Invoices.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[mspdb05.Mort_EIS2]"
+                  connectionManagerRefId="Package.ConnectionManagers[mspdb05.Mort_EIS2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[ORGANIZATION]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="ORGANIZATION"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[ORGANIZATION]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[ORGANIZATION_ID]"
+                      cachedDataType="numeric"
+                      cachedName="ORGANIZATION_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_ID]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[PROJECT_ID]"
+                      cachedDataType="numeric"
+                      cachedName="PROJECT_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_ID]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_ID]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[PROJECT_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="31"
+                      cachedName="PROJECT_NAME"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_NAME]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_NAME]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[PROJECT_ORGANIZATION_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="PROJECT_ORGANIZATION_NAME"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_ORGANIZATION_NAME]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_ORGANIZATION_NAME]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[CARRYING_OUT_ORGANIZATION_ID]"
+                      cachedDataType="numeric"
+                      cachedName="CARRYING_OUT_ORGANIZATION_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CARRYING_OUT_ORGANIZATION_ID]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[PROJECT_NO]"
+                      cachedDataType="wstr"
+                      cachedLength="25"
+                      cachedName="PROJECT_NO"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_NO]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[PROJECT_NO]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[CUSTOMER]"
+                      cachedDataType="wstr"
+                      cachedLength="360"
+                      cachedName="CUSTOMER"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[CUSTOMER]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CUSTOMER]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[CUSTOMER_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="CUSTOMER_NUMBER"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[CUSTOMER_NUMBER]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CUSTOMER_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[INVOICE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="INVOICE_NUMBER"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_NUMBER]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[INVOICE_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[TRX_ID]"
+                      cachedDataType="numeric"
+                      cachedName="TRX_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[TRX_ID]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[TRX_ID]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[INVOICE_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="INVOICE_DATE"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[INVOICE_DATE]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[DUE_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DUE_DATE"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[DUE_DATE]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[DUE_DATE]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[GL_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="GL_DATE"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[GL_DATE]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[GL_DATE]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[GL_DATE_CLOSED]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="GL_DATE_CLOSED"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[GL_DATE_CLOSED]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[GL_DATE_CLOSED]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[STATUS]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="STATUS"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[STATUS]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[STATUS]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[AMOUNT_DUE_ORIGINAL]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="AMOUNT_DUE_ORIGINAL"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[AMOUNT_DUE_ORIGINAL]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[AMOUNT_DUE_ORIGINAL]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[AMOUNT_DUE_REMAINING]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="AMOUNT_DUE_REMAINING"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[AMOUNT_DUE_REMAINING]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[AMOUNT_DUE_REMAINING]" />
+                    <inputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].Columns[CLASS]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="CLASS"
+                      externalMetadataColumnId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[Class]"
+                      lineageId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output].Columns[CLASS]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION]"
+                      dataType="wstr"
+                      length="240"
+                      name="ORGANIZATION" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_ID]"
+                      dataType="numeric"
+                      name="ORGANIZATION_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_ID]"
+                      dataType="numeric"
+                      name="PROJECT_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_NAME]"
+                      dataType="wstr"
+                      length="31"
+                      name="PROJECT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_ORGANIZATION_NAME]"
+                      dataType="wstr"
+                      length="240"
+                      name="PROJECT_ORGANIZATION_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[CARRYING_OUT_ORGANIZATION_ID]"
+                      dataType="numeric"
+                      name="CARRYING_OUT_ORGANIZATION_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[PROJECT_NO]"
+                      dataType="wstr"
+                      length="25"
+                      name="PROJECT_NO" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[CUSTOMER]"
+                      dataType="wstr"
+                      length="360"
+                      name="CUSTOMER" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[CUSTOMER_NUMBER]"
+                      dataType="wstr"
+                      length="30"
+                      name="CUSTOMER_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_NUMBER]"
+                      dataType="wstr"
+                      length="20"
+                      name="INVOICE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[TRX_ID]"
+                      dataType="numeric"
+                      name="TRX_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[INVOICE_DATE]"
+                      dataType="dbTimeStamp"
+                      name="INVOICE_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[DUE_DATE]"
+                      dataType="dbTimeStamp"
+                      name="DUE_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      name="GL_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[GL_DATE_CLOSED]"
+                      dataType="dbTimeStamp"
+                      name="GL_DATE_CLOSED" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[STATUS]"
+                      dataType="wstr"
+                      length="30"
+                      name="STATUS" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[AMOUNT_DUE_ORIGINAL]"
+                      dataType="r8"
+                      name="AMOUNT_DUE_ORIGINAL" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[AMOUNT_DUE_REMAINING]"
+                      dataType="r8"
+                      name="AMOUNT_DUE_REMAINING" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[AutoKey]"
+                      dataType="i4"
+                      name="AutoKey" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[CreationDate]"
+                      dataType="dbTimeStamp"
+                      name="CreationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[RetentionInvoice]"
+                      dataType="bool"
+                      name="RetentionInvoice" />
+                    <externalMetadataColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input].ExternalColumns[Class]"
+                      dataType="wstr"
+                      length="30"
+                      name="Class" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Ence Invoices\SQL ENCE Invoices.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Ence Invoices\SQL ENCE Invoices.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Ence Invoices\SQL ENCE Invoices.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Ence Invoices\SQL ENCE Invoices.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Ence Invoices.Paths[OLE DB Source Output]"
+              endId="Package\Ence Invoices\SQL ENCE Invoices.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Ence Invoices\ENCE Invoices.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\ENCE Payments"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{BC46CA77-774D-4F89-BE2D-17407FBBF13B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ENCE Payments"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\ENCE Payments\ENCE Payments"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="ENCE Payments"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT aaa.customer_trx_id ,aaa.gl_date, 'Adjustment' PaymentType,  SUM(aaa.amount) as l_adj_amt
+            FROM   apps.ar_adjustments_all aaa
+            WHERE  1=1
+            /*AND    aaa.customer_trx_id = l_trx_id
+             AND    aaa.gl_date &lt;= l_as_of_date */
+            GROUP BY aaa.customer_trx_id,aaa.gl_date
+Union all 
+/*Partial Payments*/
+ SELECT ara.applied_customer_trx_id
+         ,ara.gl_date
+         , 'PartialPayment' PaymentType,
+        SUM(case ara.display when 'Y' then ara.amount_applied else 0 end) as p_partial_amt
+       /* SUM(case ara.display when 'Y' then 0 else ara.amount_applied end) as p_historical_amt*/
+        FROM   apps.ar_receivable_applications_all ara
+        WHERE  1=1 
+        and ara.applied_customer_trx_id is not null /*2 adjustment which net to .01 are eliminated here*/
+       /* AND    ara.applied_customer_trx_id = p_trx_id
+          AND    ara.gl_date &lt;= to_Date('03/31/2013','MM/DD/YYYY') --p_as_of_date  */
+          AND    ara.status = 'APP'
+          AND    ara.display='Y'
+        GROUP BY ara.applied_customer_trx_id ,ara.gl_date
+Union all 
+/*Historical Payments*/
+SELECT ara.applied_customer_trx_id
+         ,ara.gl_date
+         , 'HistoricalPayment' PaymentType,
+       /* SUM(case ara.display when 'Y' then ara.amount_applied else 0 end) as p_partial_amt*/
+        SUM(case ara.display when 'Y' then 0 else ara.amount_applied end) as p_historical_amt
+        FROM   apps.ar_receivable_applications_all ara
+        WHERE  1=1 
+        and ara.applied_customer_trx_id is not null /*2 adjustment which net to .01 are eliminated here*/
+       /* AND    ara.applied_customer_trx_id = p_trx_id
+          AND    ara.gl_date &lt;= to_Date('03/31/2013','MM/DD/YYYY') --p_as_of_date  
+         AND    ara.status &lt;&gt; 'APP'*/
+          AND    ara.display&lt;&gt;'Y'
+        GROUP BY ara.applied_customer_trx_id ,ara.gl_date
+        having  SUM(case ara.display when 'Y' then 0 else ara.amount_applied end) &lt;&gt; 0</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\ENCE Payments\ENCE Payments.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[pmamri.eul4_us]"
+                  connectionManagerRefId="Package.ConnectionManagers[pmamri.eul4_us]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[CUSTOMER_TRX_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].ExternalColumns[CUSTOMER_TRX_ID]"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[CUSTOMER_TRX_ID]"
+                      name="CUSTOMER_TRX_ID"
+                      precision="15"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].ExternalColumns[GL_DATE]"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[GL_DATE]"
+                      name="GL_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[PAYMENTTYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].ExternalColumns[PAYMENTTYPE]"
+                      length="17"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[PAYMENTTYPE]"
+                      name="PAYMENTTYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[L_ADJ_AMT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].ExternalColumns[L_ADJ_AMT]"
+                      length="38"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[L_ADJ_AMT]"
+                      name="L_ADJ_AMT"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].ExternalColumns[CUSTOMER_TRX_ID]"
+                      dataType="numeric"
+                      name="CUSTOMER_TRX_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].ExternalColumns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      name="GL_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].ExternalColumns[PAYMENTTYPE]"
+                      dataType="wstr"
+                      length="17"
+                      name="PAYMENTTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].ExternalColumns[L_ADJ_AMT]"
+                      dataType="wstr"
+                      length="38"
+                      name="L_ADJ_AMT" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[CUSTOMER_TRX_ID]"
+                      dataType="numeric"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[CUSTOMER_TRX_ID]"
+                      name="CUSTOMER_TRX_ID"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[GL_DATE]"
+                      name="GL_DATE" />
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[PAYMENTTYPE]"
+                      dataType="wstr"
+                      length="17"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[PAYMENTTYPE]"
+                      name="PAYMENTTYPE" />
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[L_ADJ_AMT]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[L_ADJ_AMT]"
+                      name="L_ADJ_AMT" />
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\ENCE Payments\ENCE Payments Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="ENCE Payments Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[ENCE_Payments]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\ENCE Payments\ENCE Payments Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[mspdb05.Mort_EIS2]"
+                  connectionManagerRefId="Package.ConnectionManagers[mspdb05.Mort_EIS2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].Columns[CUSTOMER_TRX_ID]"
+                      cachedDataType="numeric"
+                      cachedName="CUSTOMER_TRX_ID"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].ExternalColumns[CUSTOMER_TRX_ID]"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[CUSTOMER_TRX_ID]" />
+                    <inputColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].Columns[GL_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="GL_DATE"
+                      externalMetadataColumnId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].ExternalColumns[GL_DATE]"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[GL_DATE]" />
+                    <inputColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].Columns[PAYMENTTYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="17"
+                      cachedName="PAYMENTTYPE"
+                      externalMetadataColumnId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].ExternalColumns[PAYMENTTYPE]"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[PAYMENTTYPE]" />
+                    <inputColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].Columns[L_ADJ_AMT]"
+                      cachedDataType="wstr"
+                      cachedLength="38"
+                      cachedName="L_ADJ_AMT"
+                      externalMetadataColumnId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].ExternalColumns[Amount]"
+                      lineageId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output].Columns[L_ADJ_AMT]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].ExternalColumns[CUSTOMER_TRX_ID]"
+                      dataType="numeric"
+                      name="CUSTOMER_TRX_ID"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].ExternalColumns[GL_DATE]"
+                      dataType="dbTimeStamp"
+                      name="GL_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].ExternalColumns[PAYMENTTYPE]"
+                      dataType="wstr"
+                      length="17"
+                      name="PAYMENTTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].ExternalColumns[Amount]"
+                      dataType="r8"
+                      name="Amount" />
+                    <externalMetadataColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].ExternalColumns[AutoKey]"
+                      dataType="i4"
+                      name="AutoKey" />
+                    <externalMetadataColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input].ExternalColumns[CreationDate]"
+                      dataType="dbTimeStamp"
+                      name="CreationDate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\ENCE Payments\ENCE Payments Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\ENCE Payments\ENCE Payments Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\ENCE Payments\ENCE Payments Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\ENCE Payments\ENCE Payments Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\ENCE Payments.Paths[OLE DB Source Output]"
+              endId="Package\ENCE Payments\ENCE Payments Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\ENCE Payments\ENCE Payments.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Core Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F244FB50-B740-4C46-9319-C3CA135BA3DF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Core Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B0D97F0-C5C0-4796-B50C-9C9908B0DE62}"
+          SQLTask:SqlStatementSource="truncate table mort_eis.dbo.ENCE_InvoicesCore&#xA;&#xA;truncate table mort_eis.dbo.ENCE_Payments" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UPdate Log file"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8BA5A6FE-4A61-4811-A872-F3A44AFA01C3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UPdate Log file"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B0D97F0-C5C0-4796-B50C-9C9908B0DE62}"
+          SQLTask:SqlStatementSource="INSERT INTO [Mortenson_Hub].[dbo].[X_DTS_ExecutionLog]&#xA;           ([PackageName]&#xA;           ,[ExecutionDate]&#xA;           ,[WhoExecuted])&#xA;     VALUES ('ENCE Aging',getdate(),user_name())" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Retention Invoices"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F28609AB-066E-4554-A10A-739A1D297467}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Retention Invoices"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B0D97F0-C5C0-4796-B50C-9C9908B0DE62}"
+          SQLTask:SqlStatementSource="Update dbo.ENCE_InvoicesCore &#xA;set retentioninvoice = -1&#xA;--select INVOICE_NUMBER,retentioninvoice from dbo.ENCE_InvoicesCore E&#xA;where INVOICE_NUMBER like '%RET%'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{20B13408-3DCE-4B71-9FED-30CED2D6C516}"
+      DTS:From="Package\Truncate Core Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Ence Invoices" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{4FE3D3CA-413D-400B-AE5D-0DBB35C4EF1D}"
+      DTS:From="Package\Ence Invoices"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\ENCE Payments" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{3EE7CE08-BBDB-431D-9F6C-C12A7DF9885A}"
+      DTS:From="Package\ENCE Payments"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Update Retention Invoices" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{592C19E6-82CC-45A6-9166-0B26027395EC}"
+      DTS:From="Package\Update Retention Invoices"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\UPdate Log file" />
+  </DTS:PrecedenceConstraints>
+  <DTS:PackageVariables>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{059FDDF3-140F-4318-A035-F831CD5EDA91}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{0EAF1E03-1B66-4B1C-8DCD-899DF9D7BC1B}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;TaskHost xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsDataFlowDiagram&gt;&lt;dwd:BoundingLeft&gt;1000&lt;/dwd:BoundingLeft&gt;&lt;dwd:BoundingTop&gt;1000&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="12" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="0" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="32438" y="17357" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="0" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01000000900144420100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Source" left="2223" top="3016" logicalid="4" controlid="1" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Ence Invoices\ENCE Invoices" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Destination" left="4551" top="5397" logicalid="5" controlid="2" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Ence Invoices\SQL ENCE Invoices" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="3623" top="3781" logicalid="6" controlid="3" masterid="0" hint1="0" hint2="0" width="3127" height="2116" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Ence Invoices.Paths[OLE DB Source Output]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="1" destid="2" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="4022" y="4180" /&gt;&lt;point x="4022" y="4788" /&gt;&lt;point x="6350" y="4788" /&gt;&lt;point x="6350" y="5397" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;/dwd:DtsDataFlowDiagram&gt;&lt;dwd:DtsComponentDesignerPropertiesList&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;70	TableInfoObjectType&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:string"&gt;Table&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;70	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;1	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;/dwd:DtsComponentDesignerPropertiesList&gt;&lt;/TaskHost&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{AF873D0B-7716-48A1-AC09-E34706C1474F}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{0EAF1E03-1B66-4B1C-8DCD-899DF9D7BC1B}-87">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PipelinePath xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:SourceName&gt;OLE DB Source Output&lt;/dwd:SourceName&gt;&lt;dwd:DestinationName&gt;OLE DB Destination Input&lt;/dwd:DestinationName&gt;&lt;/PipelinePath&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{4231DE68-0436-4A2E-B72F-9F43AFAB8A5F}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{4FE3D3CA-413D-400B-AE5D-0DBB35C4EF1D}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{E0DA190A-54E5-4023-B97E-606E9893A4F4}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{3EE7CE08-BBDB-431D-9F6C-C12A7DF9885A}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{9E30FD46-9490-426B-A085-4D363B95D47B}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{20B13408-3DCE-4B71-9FED-30CED2D6C516}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{3D42DF0E-2978-4118-945F-104B40827D18}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{592C19E6-82CC-45A6-9166-0B26027395EC}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{71621CC4-0E29-4701-B934-D9CCDAC18627}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{BC46CA77-774D-4F89-BE2D-17407FBBF13B}">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;TaskHost xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsDataFlowDiagram&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="10" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="0" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="32438" y="17357" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="0" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Source" left="2223" top="3016" logicalid="4" controlid="1" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\ENCE Payments\ENCE Payments" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="OLE DB Destination" left="6695" top="5027" logicalid="5" controlid="2" masterid="0" hint1="0" hint2="0" width="4683" height="1588" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800004b12000034060000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\ENCE Payments\ENCE Payments Destination" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="3623" top="3781" logicalid="6" controlid="3" masterid="0" hint1="0" hint2="0" width="5813" height="1746" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="1" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\ENCE Payments.Paths[OLE DB Source Output]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="1" destid="2" sourceattachpoint="7" destattachpoint="8" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="4022" y="4180" /&gt;&lt;point x="4022" y="4603" /&gt;&lt;point x="9036" y="4603" /&gt;&lt;point x="9036" y="5027" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;/dwd:DtsDataFlowDiagram&gt;&lt;dwd:DtsComponentDesignerPropertiesList&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;28	TableInfoObjectType&lt;/dwd:key&gt;&lt;dwd:value xsi:type="xsd:string"&gt;Table&lt;/dwd:value&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;1	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:DtsComponentDesignTimeProperty&gt;&lt;dwd:key xsi:type="xsd:string"&gt;28	DataSourceViewID&lt;/dwd:key&gt;&lt;/dwd:DtsComponentDesignTimeProperty&gt;&lt;/dwd:DtsComponentDesignerPropertiesList&gt;&lt;/TaskHost&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{91E05DE4-F82A-45FA-ABA4-CD7A070AABE9}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="{BC46CA77-774D-4F89-BE2D-17407FBBF13B}-45">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;PipelinePath xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:SourceName&gt;OLE DB Source Output&lt;/dwd:SourceName&gt;&lt;dwd:DestinationName&gt;OLE DB Destination Input&lt;/dwd:DestinationName&gt;&lt;/PipelinePath&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{1D12DA68-F2E5-48CD-8316-196CC0DCB5CC}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="package-diagram">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsControlFlowDiagram&gt;&lt;dwd:BoundingTop&gt;1000&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="22" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="0" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="32438" y="18283" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="1456" top="3698" logicalid="10" controlid="1" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Ence Invoices" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="0" top="1000" logicalid="11" controlid="2" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Truncate Core Table" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="1400" top="1765" logicalid="12" controlid="3" masterid="0" hint1="0" hint2="0" width="2255" height="2433" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="2" destid="1" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="1799" y="2164" /&gt;&lt;point x="1799" y="2931" /&gt;&lt;point x="3255" y="2931" /&gt;&lt;point x="3255" y="3698" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="4472" top="6239" logicalid="13" controlid="4" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\ENCE Payments" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="2856" top="4463" logicalid="14" controlid="5" masterid="0" hint1="0" hint2="0" width="3815" height="2276" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 1]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="1" destid="4" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="3255" y="4862" /&gt;&lt;point x="3255" y="5550" /&gt;&lt;point x="6271" y="5550" /&gt;&lt;point x="6271" y="6239" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="7435" top="8281" logicalid="15" controlid="6" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Update Retention Invoices" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="5872" top="7004" logicalid="16" controlid="7" masterid="0" hint1="0" hint2="0" width="3762" height="1777" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 2]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="4" destid="6" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="6271" y="7403" /&gt;&lt;point x="6271" y="7842" /&gt;&lt;point x="9234" y="7842" /&gt;&lt;point x="9234" y="8281" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="10954" top="10107" logicalid="17" controlid="8" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\UPdate Log file" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="8835" top="9046" logicalid="18" controlid="9" masterid="0" hint1="0" hint2="0" width="4318" height="1561" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 3]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="6" destid="8" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="9234" y="9445" /&gt;&lt;point x="9234" y="9776" /&gt;&lt;point x="12753" y="9776" /&gt;&lt;point x="12753" y="10107" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;/dwd:DtsControlFlowDiagram&gt;&lt;/Package&gt;</DTS:Property>
+    </DTS:PackageVariable>
+    <DTS:PackageVariable
+      DTS:CreationName=""
+      DTS:DTSID="{A3250543-A7D1-43A9-9C64-D8D6FF6AF95E}"
+      DTS:Namespace="dts-designer-1.0"
+      DTS:ObjectName="package-diagram">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="PackageVariableValue">&lt;Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsControlFlowDiagram&gt;&lt;dwd:BoundingTop&gt;1000&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;&lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout110" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout110" version="7" nextobject="22" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="0" scrolltop="0" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="32438" y="18283" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;&lt;font&gt;&lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;&lt;/font&gt;&lt;mouseicon&gt;&lt;ddsxmlobjectstreamwrapper binary="6c74000000000000" /&gt;&lt;/mouseicon&gt;&lt;/diagram&gt;&lt;layoutmanager&gt;&lt;ddsxmlobj /&gt;&lt;/layoutmanager&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="1456" top="3698" logicalid="10" controlid="1" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Ence Invoices" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="0" top="1000" logicalid="11" controlid="2" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Truncate Core Table" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="1400" top="1765" logicalid="12" controlid="3" masterid="0" hint1="0" hint2="0" width="2255" height="2433" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="2" destid="1" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="1799" y="2164" /&gt;&lt;point x="1799" y="2931" /&gt;&lt;point x="3255" y="2931" /&gt;&lt;point x="3255" y="3698" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Data Flow Task" left="4472" top="6239" logicalid="13" controlid="4" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\ENCE Payments" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="2856" top="4463" logicalid="14" controlid="5" masterid="0" hint1="0" hint2="0" width="3815" height="2276" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 1]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="1" destid="4" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="3255" y="4862" /&gt;&lt;point x="3255" y="5550" /&gt;&lt;point x="6271" y="5550" /&gt;&lt;point x="6271" y="6239" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="7435" top="8281" logicalid="15" controlid="6" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\Update Retention Invoices" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="5872" top="7004" logicalid="16" controlid="7" masterid="0" hint1="0" hint2="0" width="3762" height="1777" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 2]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="4" destid="6" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="6271" y="7403" /&gt;&lt;point x="6271" y="7842" /&gt;&lt;point x="9234" y="7842" /&gt;&lt;point x="9234" y="8281" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="Execute SQL Task" left="10954" top="10107" logicalid="17" controlid="8" masterid="0" hint1="0" hint2="0" width="3598" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobjectstreaminitwrapper binary="000800000e0e00008c040000" /&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package\UPdate Log file" vartype="8" /&gt;&lt;property name="ShowConnectorSource" value="0" vartype="2" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;shape groupshapeid="0" groupnode="0" /&gt;&lt;/ddscontrol&gt;&lt;ddscontrol controlprogid="MSDDS.Polyline" left="8835" top="9046" logicalid="18" controlid="9" masterid="0" hint1="0" hint2="0" width="4318" height="1561" noresize="0" nomove="0" nodefaultattachpoints="1" autodrag="0" usedefaultiddshape="0" selectable="1" showselectionhandles="0" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;&lt;control&gt;&lt;ddsxmlobj&gt;&lt;polyline endtypedst="3" endtypesrc="1" usercolor="32768" linestyle="0" linerender="2" customendtypedstid="0" customendtypesrcid="0" adornsvisible="1" /&gt;&lt;/ddsxmlobj&gt;&lt;/control&gt;&lt;layoutobject&gt;&lt;ddsxmlobj&gt;&lt;property name="LogicalObject" value="Package.PrecedenceConstraints[Constraint 3]" vartype="8" /&gt;&lt;property name="Virtual" value="0" vartype="11" /&gt;&lt;property name="VisibleAP" value="0" vartype="3" /&gt;&lt;/ddsxmlobj&gt;&lt;/layoutobject&gt;&lt;connector lineroutestyle="Microsoft.DataWarehouse.Layout.GraphLayout110" sourceid="6" destid="8" sourceattachpoint="7" destattachpoint="6" segmenteditmode="0" bendpointeditmode="0" bendpointvisibility="2" relatedid="0" virtual="0"&gt;&lt;point x="9234" y="9445" /&gt;&lt;point x="9234" y="9776" /&gt;&lt;point x="12753" y="9776" /&gt;&lt;point x="12753" y="10107" /&gt;&lt;/connector&gt;&lt;/ddscontrol&gt;&lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;/dwd:DtsControlFlowDiagram&gt;&lt;/Package&gt;</DTS:Property>
+    </DTS:PackageVariable>
+  </DTS:PackageVariables>
+</DTS:Executable>
