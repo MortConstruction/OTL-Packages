@@ -10,8 +10,8 @@
   DTS:LastModifiedProductVersion="15.0.2000.68"
   DTS:LocaleID="1033"
   DTS:ObjectName="1  DB12Oracle_GB_Get_Hiearchies_Indirect_Projects"
-  DTS:VersionBuild="25"
-  DTS:VersionGUID="{15541FF1-C8BF-433E-90A9-161C348F88D8}">
+  DTS:VersionBuild="26"
+  DTS:VersionGUID="{1BDE911B-6983-4CA6-99D5-13F804001818}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -26,7 +26,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiODYtKKdq06zAcLIx4wA4AAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACJXNUnj44OJEbK6phFjBUAAAAAAASAAACgAAAAEAAAAC0FyTjg3mAHilgrFaRobgIwAAAAEOkbclEl4chg4o5LzTD9DU9IfjQUI2NP5fAD2jmWSez8HBkpIIOUpwj9BURd3ESAFAAAAFYIE84Ny+hApnpIbwzgXnixzcVw</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiODYtKKdq06zAcLIx4wA4AAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAD0IUXHjFy5sWXVnR0ssKMqAAAAAASAAACgAAAAEAAAAKVSMNHmdl1UlQgJ+InKPoYwAAAASCW0ySHC+RU4jAoqA5BIukCcbfE2MmP616pX7TIc8sP5AOtwlrHrcJLIYmWN7hIlFAAAAJZ+OOWbiROoiIpbevreY2Keh8a6</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -41,7 +41,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiODYtKKdq06zAcLIx4wA4AAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACA2s1kFYkyKwVFWd8VxkQlAAAAAASAAACgAAAAEAAAAEYsNG2eaXQ8CPRX0Cq4Rs0wAAAALsNWls5hlU0kZcYtcgMBd1Ls1Ub2PYynKQzHU981MaVsnzofCB90bFRY8kKH48EIFAAAAFN7JVO0coEe6QppEEYe0+P4DqNT</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiODYtKKdq06zAcLIx4wA4AAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAPEd0RC8ULKjOXlis+U2GgAAAAAASAAACgAAAAEAAAAF5gLQ/2zOC+dNyPJxqzwEkwAAAAyEamgNVVBN3+QpbVpMIyvILAgq+BN2Hko3NkTTMYzec8aFWRTlgX4XXq4I/G3wFgFAAAAACSHGfuCs2lqSsSaVEqzPnWkuud</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -2599,7 +2599,7 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
         <NodeLayout
           Size="136,44"
           Id="Package\Check Oracle"
@@ -2645,7 +2645,7 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
           TopLeft="129.292452830189,108.198113207547">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{assembly:Null}"
+              StartConnector="{x:Null}"
               EndConnector="0,40.6603773584906"
               Start="0,0"
               End="0,33.1603773584906">
@@ -2667,7 +2667,7 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
           TopLeft="132.292452830189,192.858490566038">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{assembly:Null}"
+              StartConnector="{x:Null}"
               EndConnector="0,44.6603773584906"
               Start="0,0"
               End="0,37.1603773584906">
@@ -2689,7 +2689,7 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
           TopLeft="128.792452830189,281.518867924528">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{assembly:Null}"
+              StartConnector="{x:Null}"
               EndConnector="0,33.6603773584906"
               Start="0,0"
               End="0,26.1603773584906">
@@ -2711,7 +2711,7 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
           TopLeft="129.948113207547,359.179245283019">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{assembly:Null}"
+              StartConnector="{x:Null}"
               EndConnector="0,34.6981132075472"
               Start="0,0"
               End="0,27.1981132075472">
@@ -2733,7 +2733,7 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
           TopLeft="134.448113207547,437.877358490566">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{assembly:Null}"
+              StartConnector="{x:Null}"
               EndConnector="0,36.6226415094339"
               Start="0,0"
               End="0,29.1226415094339">
@@ -2755,7 +2755,7 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
           TopLeft="309.292452830189,76.1132075471698">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{assembly:Null}"
+              StartConnector="{x:Null}"
               EndConnector="-116,0"
               Start="0,0"
               End="-108.5,0">
@@ -2777,7 +2777,7 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
           TopLeft="445.292452830189,77.122641509434">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{assembly:Null}"
+              StartConnector="{x:Null}"
               EndConnector="80.8490566037736,0"
               Start="0,0"
               End="73.3490566037736,0">
@@ -2801,7 +2801,7 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
           TopLeft="136.792452830189,518.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{assembly:Null}"
+              StartConnector="{x:Null}"
               EndConnector="0,47.6603773584906"
               Start="0,0"
               End="0,40.1603773584906">
@@ -2838,6 +2838,44 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
       </GraphLayout>
     </LayoutInfo>
   </Package>
+  <TaskHost
+    design-time-name="Package\Get Projects">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Get Projects\Oracle Projects"
+          TopLeft="34.5,5.5" />
+        <NodeLayout
+          Size="208,42"
+          Id="Package\Get Projects\Mortenson Hub GB Projects"
+          TopLeft="5.50000000000001,107.5" />
+        <EdgeLayout
+          Id="Package\Get Projects.Paths[OLE DB Source Output]"
+          TopLeft="109.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
   <TaskHost
     design-time-name="Package\GL Segments">
     <LayoutInfo>
@@ -2889,5 +2927,43 @@ on xp.child_organization_id = to_number(seg3.Org_idfromsegment)</property>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Hierarchies">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Hierarchies\Oracle Hiearchies"
+          TopLeft="29.5,5.5" />
+        <NodeLayout
+          Size="209,42"
+          Id="Package\Hierarchies\Mortenson_Hub Hierarchies"
+          TopLeft="5.50000000000001,107.5" />
+        <EdgeLayout
+          Id="Package\Hierarchies.Paths[OLE DB Source Output]"
+          TopLeft="110,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>

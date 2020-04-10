@@ -10,8 +10,8 @@
   DTS:LastModifiedProductVersion="15.0.2000.68"
   DTS:LocaleID="1033"
   DTS:ObjectName="1  R_Oracle_EventTracking_CHG0034559"
-  DTS:VersionBuild="80"
-  DTS:VersionGUID="{CAE4E8D3-55CC-4A25-B35F-558BBD1D1337}">
+  DTS:VersionBuild="83"
+  DTS:VersionGUID="{287F7BAF-EE19-48A0-99CA-611F86BA5E6A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -22,17 +22,27 @@
       DTS:ObjectName="M12.BestPractice">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=mspdb12;Initial Catalog=BestPractice;Provider=SQLNCLI11;Integrated Security=SSPI;Application Name=SSIS-R_Oracle_EventTracking-{66F2F82D-9427-4E66-B523-C227172866EB}mspdb12.BestPractice;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=mspdb12;User ID=BP_MORTHUB;Initial Catalog=BestPractice;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;Application Name=SSIS-R_Oracle_EventTracking-{66F2F82D-9427-4E66-B523-C227172866EB}mspdb12.BestPractice;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiODYtKKdq06zAcLIx4wA4AAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAD5hTGR63ifoZaL0kwugc0EAAAAAASAAACgAAAAEAAAAO2WBiArj4ymYXhciwkmmrkwAAAAe1U4uF1RFyE4z+wWCxKJAed4oBvGwhFTG0pB18gEANBMBFAMxih7IZrYruSVKGpsFAAAADmgr/7Lk2ffeBPcaIzM/qupFNKL</DTS:Password>
+        </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+      DTS:refId="Package.ConnectionManagers[P04.Mortenson_Hub]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{48E7AD43-8F47-4995-B209-B85B77E34678}"
-      DTS:ObjectName="N04.Mortenson_Hub">
+      DTS:ObjectName="P04.Mortenson_Hub">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=nwdbasqldbs04;Initial Catalog=Mortenson_Hub;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-R_Oracle_EventTracking-{48E7AD43-8F47-4995-B209-B85B77E34678}mspdb05.Mortenson_Hub;" />
+          DTS:ConnectionString="Data Source=pwdbasqldbs04;User ID=TeamMemberHierarchy;Initial Catalog=Mortenson_Hub;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;Application Name=SSIS-R_Oracle_EventTracking-{48E7AD43-8F47-4995-B209-B85B77E34678}mspdb05.Mortenson_Hub;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiODYtKKdq06zAcLIx4wA4AAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAB+lX+dUE8SyVPcTYP8uaYNAAAAAASAAACgAAAAEAAAAP2nLUFFw7GjxKVw3r0VUZYwAAAAbQZ++A/prdAXWY9Knt7amvPu/s4jipxHPVXNXIg6I/W3dvMiO0rjIB+vbN/iWkIBFAAAAPPn0WCxDnwDxcR7i3HU5Bg7Jtbb</DTS:Password>
+        </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -46,7 +56,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiODYtKKdq06zAcLIx4wA4AAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAARGbn8l0YJNjYoAiz9MVhvAAAAAASAAACgAAAAEAAAAAuatQvR6G+1SIG0XkvsEkIwAAAA8k61xk0GXNxoxPLi7zF3Wvlwx+NwxEaRU40j2g8TU4bnoJnmrOtJ5xyt5M7XXcZeFAAAAMC5i2Y0/gc+EkGJdVXZJgTjhhNZ</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiODYtKKdq06zAcLIx4wA4AAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABQY+DeWGjqMLJThQ4772NMAAAAAASAAACgAAAAEAAAANRXrU77TQDb7MKFmBD14fgwAAAAgNmyOzvAS8vaj+HauUWybhWoaBfGlWXWxcwORN+5gGFGa2GuzHoK6tptaPMMxCJ7FAAAACPIsRSvYrT9wciye9/ZREQxInX6</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -128,8 +138,8 @@
               <connections>
                 <connection
                   refId="Package\Divsion of Work\DBN04 Hub Division of Work.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[N04.Mortenson_Hub]"
-                  connectionManagerRefId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+                  connectionManagerID="Package.ConnectionManagers[P04.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[P04.Mortenson_Hub]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -827,8 +837,8 @@ ORDER BY        1</property>
               <connections>
                 <connection
                   refId="Package\Get Project Key Members df\Oracle Key Members SQL.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[N04.Mortenson_Hub]"
-                  connectionManagerRefId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+                  connectionManagerID="Package.ConnectionManagers[P04.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[P04.Mortenson_Hub]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2528,8 +2538,8 @@ ORDER BY 1 DESC</property>
               <connections>
                 <connection
                   refId="Package\Get ProjectInfo df\R_Projects SQL.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[N04.Mortenson_Hub]"
-                  connectionManagerRefId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+                  connectionManagerID="Package.ConnectionManagers[P04.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[P04.Mortenson_Hub]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3683,8 +3693,8 @@ FROM   (SELECT DISTINCT pa.org_id,
               <connections>
                 <connection
                   refId="Package\Get Vendors with SOV df\R_Vendors With SOV.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[N04.Mortenson_Hub]"
-                  connectionManagerRefId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+                  connectionManagerID="Package.ConnectionManagers[P04.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[P04.Mortenson_Hub]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4085,8 +4095,8 @@ Order by 1,2</property>
               <connections>
                 <connection
                   refId="Package\Project Class Code\Project Class Code e.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[N04.Mortenson_Hub]"
-                  connectionManagerRefId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+                  connectionManagerID="Package.ConnectionManagers[P04.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[P04.Mortenson_Hub]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4513,8 +4523,8 @@ order by pc.project_id,pc.Class_Category,pc.Class_Code</property>
               <connections>
                 <connection
                   refId="Package\Project Class Code Member\Project Class Member List.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[N04.Mortenson_Hub]"
-                  connectionManagerRefId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+                  connectionManagerID="Package.ConnectionManagers[P04.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[P04.Mortenson_Hub]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4891,8 +4901,8 @@ order by Class_Category</property>
               <connections>
                 <connection
                   refId="Package\Project ClassCategory\Project Classes E.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[N04.Mortenson_Hub]"
-                  connectionManagerRefId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+                  connectionManagerID="Package.ConnectionManagers[P04.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[P04.Mortenson_Hub]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -5233,8 +5243,8 @@ from mspdb12.BestPractice.dbo.SubDivision_dow DB01</property>
               <connections>
                 <connection
                   refId="Package\Subdivision of Work\SubDivision of Work DBN04.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[N04.Mortenson_Hub]"
-                  connectionManagerRefId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+                  connectionManagerID="Package.ConnectionManagers[P04.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[P04.Mortenson_Hub]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -5463,8 +5473,8 @@ from mspdb12.BestPractice.dbo.SubDivision_dow DB01</property>
               <connections>
                 <connection
                   refId="Package\Update Employee Info\R_TeamMembers.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[N04.Mortenson_Hub]"
-                  connectionManagerRefId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+                  connectionManagerID="Package.ConnectionManagers[P04.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[P04.Mortenson_Hub]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -5736,8 +5746,8 @@ from mspdb12.BestPractice.dbo.SubDivision_dow DB01</property>
               <connections>
                 <connection
                   refId="Package\Update Employee Info\VW_CurrentEmpInfo.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[N04.Mortenson_Hub]"
-                  connectionManagerRefId="Package.ConnectionManagers[N04.Mortenson_Hub]"
+                  connectionManagerID="Package.ConnectionManagers[P04.Mortenson_Hub]"
+                  connectionManagerRefId="Package.ConnectionManagers[P04.Mortenson_Hub]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -7887,7 +7897,7 @@ from mspdb12.BestPractice.dbo.SubDivision_dow DB01</property>
         <NodeLayout
           Size="136,44"
           Id="Package\Update R_Projects"
-          TopLeft="893.556603773585,518.556603773585" />
+          TopLeft="894.556603773585,518.556603773585" />
         <NodeLayout
           Size="152,44"
           Id="Package\Update Superintendent"
@@ -7938,18 +7948,18 @@ from mspdb12.BestPractice.dbo.SubDivision_dow DB01</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 10]"
-          TopLeft="1029.55660377358,539.622641509434">
+          TopLeft="1030.55660377359,539.622641509434">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{x:Null}"
-              EndConnector="24.7169811320755,0"
+              EndConnector="23.716981132075,0"
               Start="0,0"
-              End="17.2169811320755,0">
+              End="16.216981132075,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="17.2169811320755,0" />
+                    End="16.216981132075,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -8184,14 +8194,14 @@ from mspdb12.BestPractice.dbo.SubDivision_dow DB01</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{x:Null}"
-              EndConnector="27.2641509433961,0"
+              EndConnector="28.2641509433961,0"
               Start="0,0"
-              End="19.7641509433961,0">
+              End="20.7641509433961,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="19.7641509433961,0" />
+                    End="20.7641509433961,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
